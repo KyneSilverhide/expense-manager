@@ -5,6 +5,9 @@ import { Meteor } from 'meteor/meteor';
 import App from '../../ui/layouts/App.js';
 import Index from '../../ui/pages/Index.js';
 import Login from '../../ui/pages/Login.js';
+import Friends from '../../ui/pages/friends/Friends.js';
+import NewFriend from '../../ui/pages/friends/NewFriend.js';
+import EditFriend from '../../ui/containers/friends/EditFriend.js';
 import NotFound from '../../ui/pages/NotFound.js';
 
 const authenticate = (nextState, replace) => {
@@ -21,10 +24,20 @@ const authenticate = (nextState, replace) => {
 Meteor.startup(() => {
   render(
     <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute name="index" component={Index} onEnter={authenticate}/>
-      <Route name="login" path="/login" component={Login}/>
-      <Route path="*" component={NotFound}/>
-    </Route>
-  </Router>, document.getElementById('react-root'));
+      <Route path="/" component={App}>
+        <IndexRoute name="index" component={Index} onEnter={authenticate} />
+        <Route name="login" path="/login" component={Login} />
+        <Route name="friends" path="/friends" component={Friends} onEnter={authenticate} />
+        <Route name="newFriend" path="/friends/new" component={NewFriend} onEnter={authenticate} />
+        <Route
+          name="editFriend"
+          path="/friends/:_id/edit"
+          component={EditFriend}
+          onEnter={authenticate}
+        />
+        <Route path="*" component={NotFound} />
+      </Route>
+    </Router>,
+    document.getElementById('react-root'),
+  );
 });

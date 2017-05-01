@@ -1,6 +1,8 @@
 {
   "public": {
-
+    "friend": {
+      "mail_suffix": "gmail.com"
+    }
   },
   "private": {
     "oAuth": {

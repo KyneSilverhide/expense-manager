@@ -10,7 +10,9 @@ const sortByField = (item1, item2, field) => {
 };
 
 export const sortByName = (item1, item2) => sortByField(item1, item2, 'name');
+export const sortByFirstname = (item1, item2) => sortByField(item1, item2, 'firstname');
+export const sortByLastName = (item1, item2) => sortByField(item1, item2, 'lastname');
 
-export const sortByMail = (item1, item2) => sortByField(item1, item2, 'mail');
+export const sortByMail = (item1, item2) => sortByField(item1, item2, 'email');
 
 export const sortByEndDate = (item1, item2) => sortByField(item1, item2, 'endDate');

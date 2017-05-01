@@ -20,26 +20,34 @@ const handleRemove = (_id) => {
   });
 };
 
-const TeamsList = ({ teams }) => (teams.length > 0
-  ? <ListGroup className="TeamsList">
-      {teams.sort(sortByName).map(({ _id, name }) => (
-        <ListGroupItem key={_id} className='clearfix'>
-          {name}
-          <span className="pull-right">
-            &nbsp;
-            <button className="btn btn-sm btn-default" onClick={() => handleEdit(_id)}><FontAwesome name='pencil'/> Editer</button>
-            &nbsp;
-            <Confirm
-              onConfirm={() => handleRemove(_id)}
-              body="Etes-vous sur de vouloir supprimer cette équipe?"
-              confirmText="Supprimer" cancelText="Annuler" title="Suppression">
-              <button className="btn btn-sm btn-danger"><FontAwesome name='trash'/> Supprimer</button>
-            </Confirm>
-          </span>
-        </ListGroupItem>
-      ))}
-    </ListGroup>
-  : <Alert bsStyle="warning">Il n'y a aucune équipe pour l'instant</Alert>);
+const TeamsList = ({ teams }) =>
+  teams.length > 0
+    ? <div className="TeamsList">
+        {teams.sort(sortByName).map(({ _id, name }) => (
+          <div key={_id} className="clearfix">
+            {name}
+            <span className="pull-right">
+              &nbsp;
+              <button className="btn btn-sm btn-default" onClick={() => handleEdit(_id)}>
+                <FontAwesome name="pencil" /> Editer
+              </button>
+              &nbsp;
+              <div
+                onConfirm={() => handleRemove(_id)}
+                body="Etes-vous sur de vouloir supprimer cette équipe?"
+                confirmText="Supprimer"
+                cancelText="Annuler"
+                title="Suppression"
+              >
+                <button className="btn btn-sm btn-danger">
+                  <FontAwesome name="trash" /> Supprimer
+                </button>
+              </div>
+            </span>
+          </div>
+        ))}
+      </div>
+    : <div bsStyle="warning">Il n'y a aucune équipe pour l'instant</div>;
 
 TeamsList.propTypes = {
   teams: React.PropTypes.array,

@@ -6,10 +6,10 @@ import FontAwesome from 'react-fontawesome';
 
 const NotFound = () => (
   <Layout container align="center" justify="center">
-    <Layout item xs="5">
+    <Layout item xs={5}>
       <Paper className="paper-fixed">
         <Text type="headline" component="h3">
-          <FontAwesome name="exclamation-circle" size="1x" /> Error [404]
+          <FontAwesome name="exclamation-circle" /> Error [404]
         </Text>
         <Text type="body1" component="p">
           {window.location.pathname} doesn't exist.

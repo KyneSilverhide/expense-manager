@@ -5,8 +5,23 @@ import Button from 'material-ui/Button';
 import FontAwesome from 'react-fontawesome';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { browserHistory } from 'react-router';
+import { linkConnectedUserToFriendsWithSameEmail } from '../../api/friends/friend.methods.js';
 
 export default class Login extends React.Component {
+  linkUserToFriends() {
+    const user = Meteor.user();
+    const googleData = {
+      email: user.services.google.email,
+      googleAvatar: user.services.google.picture,
+    };
+
+    linkConnectedUserToFriendsWithSameEmail.call(googleData, (error) => {
+      if (error) {
+        Bert.alert(error.reason, 'danger');
+      }
+    });
+  }
+
   handleLogin() {
     Meteor.loginWithGoogle(
       {
@@ -22,6 +37,7 @@ export default class Login extends React.Component {
           } else {
             browserHistory.push('/');
           }
+          this.linkUserToFriends();
         }
       },
     );

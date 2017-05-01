@@ -1,6 +1,6 @@
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #BCAAA4;
+  background-color: #E8F5E9;
 }
 
 #app-content {
@@ -9,4 +9,9 @@ body {
 
 .paper-fixed {
   padding: 15px;
+}
+
+.error {
+  color: red;
+  font-size: 0.8em;
 }
