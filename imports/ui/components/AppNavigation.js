@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
-import Text from 'material-ui/Text';
+import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router';
@@ -18,7 +18,7 @@ const AppNavigation = ({ hasUser }) =>
               <FontAwesome name="home" />
             </IconButton>
           </Link>
-          <Text type="title" colorInherit>Expenses Manager</Text>
+          <Typography type="title" colorInherit>Expenses Manager</Typography>
           <AuthenticatedNavigation />
           <div className="flex-spacer" />
           <UserBlock />

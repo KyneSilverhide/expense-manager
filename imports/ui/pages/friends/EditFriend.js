@@ -1,16 +1,16 @@
 import React from 'react';
-import FriendEditor from '../../components/friends/FriendEditor.js';
 import Layout from 'material-ui/Layout';
 import Paper from 'material-ui/Paper';
-import Text from 'material-ui/Text';
+import Typography from 'material-ui/Typography';
+import FriendEditor from '../../components/friends/FriendEditor.js';
 
 const EditFriend = ({ friend }) => (
   <Layout container align="center" justify="center" className="NewFriend">
     <Layout item xs={5}>
       <Paper className="paper-fixed">
-        <Text type="headline" component="h3">
+        <Typography type="headline" component="h3">
           Editing : {`${friend.firstname} ${friend.lastname}`}
-        </Text>
+        </Typography>
         <FriendEditor friend={friend} />
       </Paper>
     </Layout>

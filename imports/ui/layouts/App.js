@@ -3,14 +3,14 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createPalette from 'material-ui/styles/palette';
 import createMuiTheme from 'material-ui/styles/theme';
-import { teal, deepOrange } from 'material-ui/styles/colors';
+import { deepOrange, brown } from 'material-ui/styles/colors';
 import Layout from 'material-ui/Layout';
 import AppNavigation from '../containers/AppNavigation.js';
 
 injectTapEventPlugin();
 
 const palette = createPalette({
-  primary: teal,
+  primary: brown,
   accent: deepOrange,
   type: 'light',
 });

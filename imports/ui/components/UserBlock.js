@@ -4,7 +4,7 @@ import Button from 'material-ui/Button';
 import ToolbarGroup from 'material-ui/Toolbar';
 import Avatar from 'material-ui/Avatar';
 import Layout from 'material-ui/Layout';
-import Text from 'material-ui/Text';
+import Typography from 'material-ui/Typography';
 import FontAwesome from 'react-fontawesome';
 import { Meteor } from 'meteor/meteor';
 
@@ -38,8 +38,8 @@ const UserBlock = () => (
       </Layout>
       <Layout item>
         <Layout container direction="column" align="center">
-          <Text component="span" colorInherit={true}>{userName()}</Text>
-          <Text component="small" type="caption" colorInherit={true}>{userMail()}</Text>
+          <Typography component="span" colorInherit={true}>{userName()}</Typography>
+          <Typography component="small" type="caption" colorInherit={true}>{userMail()}</Typography>
         </Layout>
       </Layout>
       <Layout item>

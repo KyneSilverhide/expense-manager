@@ -1,49 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Layout } from 'material-ui/Layout';
-import { Button } from 'material-ui/Button';
-import { Text } from 'material-ui/Text';
-import { Card, CardMedia, CardContent, CardActions } from 'material-ui/Card';
-import FontAwesome from 'react-fontawesome';
+import Layout from 'material-ui/Layout';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import AddIcon from 'material-ui-icons/Add';
+import EventsList from '../../containers/events/EventsList.js';
 
 const Events = () => (
-  <Layout container justify="center" align="center">
-    <Layout item>
-      <Card className="event-card">
-        <CardMedia>
-          <img src="http://placehold.it/350x150" alt="Contemplative Reptile" />
-        </CardMedia>
-        <CardContent>
-          <Text type="headline" component="h2">Lizard</Text>
-          <Text component="p">
-            Lizards are a widespread group of squamate reptiles, with over
-            6,000 species, ranging across all continents except Antarctica
-          </Text>
-        </CardContent>
-        <CardActions>
-          <Button compact primary>Share</Button>
-          <Button compact primary>Learn More</Button>
-        </CardActions>
-      </Card>
+  <Layout container align="center" justify="center" className="Events">
+    <Layout item xs={5}>
+      <Paper className="paper-fixed">
+        <Typography type="headline" component="h3">
+          Events
+        </Typography>
+        <EventsList />
+      </Paper>
     </Layout>
-    <Layout item>
-      <Card className="event-card">
-        <CardMedia>
-          <img src="http://placehold.it/350x150" alt="Contemplative Reptile" />
-        </CardMedia>
-        <CardContent>
-          <Text type="headline" component="h2">Lizard</Text>
-          <Text component="p">
-            Lizards are a widespread group of squamate reptiles, with over
-            6,000 species, ranging across all continents except Antarctica
-          </Text>
-        </CardContent>
-        <CardActions>
-          <Button compact primary>Share</Button>
-          <Button compact primary>Learn More</Button>
-        </CardActions>
-      </Card>
-    </Layout>
+    <Link to="/events/new">
+      <Button fab primary>
+        <AddIcon />
+      </Button>
+    </Link>
   </Layout>
 );
 
