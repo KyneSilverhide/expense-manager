@@ -7,10 +7,10 @@ import Input from 'material-ui/Input';
 import InputLabel from 'material-ui/Input/InputLabel';
 import FormControl from 'material-ui/Form/FormControl';
 import { LabelSwitch } from 'material-ui/Switch';
-import InfiniteCalendar from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 import Button from 'material-ui/Button';
 import eventEditor from './event-editor.js';
+import EventCalendar from './EventCalendar.js';
 
 const backToList = () => {
   browserHistory.push('/events');
@@ -23,8 +23,8 @@ export default class EventEditor extends React.Component {
   }
 
   componentDidMount() {
-    eventEditor({ component: this });
     const { event } = this.props;
+    eventEditor({ component: this });
     this.setState({ completed: event ? event.completed : false, date: event ? event.date : '' });
     setTimeout(
       () => {
@@ -65,29 +65,7 @@ export default class EventEditor extends React.Component {
         </FormControl>
         <div className="form-divider" />
         <FormControl>
-          <InputLabel htmlFor="date">
-            Date
-          </InputLabel>
-          <InfiniteCalendar
-            theme={{
-              selectionColor: '#795548',
-              weekdayColor: '#8D6E63',
-              headerColor: '#795548',
-              floatingNav: {
-                background: '#A1887F',
-                color: '#FFF',
-                chevron: '#FFA726',
-              },
-            }}
-            locale={{
-              weekStartsOn: 1,
-            }}
-            onSelect={date => this.updateSelectedDate(date)}
-            selected={this.state.date}
-            width={500}
-            height={300}
-          />
-          <input type="hidden" name="date" value={this.state.date} />
+          <EventCalendar event={event} onSelectedDate={this.updateSelectedDate.bind(this)} />
         </FormControl>
         <FormControl>
           <LabelSwitch
@@ -95,7 +73,6 @@ export default class EventEditor extends React.Component {
             label="Completed"
             onChange={(changeEvent, checked) => this.toggleCompletionState(checked)}
           />
-          <input type="hidden" name="completed" value={this.state.completed} />
         </FormControl>
         <Button raised primary onClick={() => backToList()}>
           <FontAwesome name="undo" />&nbsp;Cancel

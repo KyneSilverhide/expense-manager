@@ -55,9 +55,6 @@ export const linkCreatedFriendToExistingUser = new ValidatedMethod({
     googleAvatar: { type: String, optional: false },
   }).validator(),
   run(data) {
-    console.log(
-      `Linking friend ${data.friendId} to user ${data.userId} with avatar ${data.googleAvatar}`,
-    );
     return Friends.update(
       { _id: data.friendId },
       { $set: { userId: data.userId, gavatar: data.googleAvatar } },

@@ -8,10 +8,11 @@ let component;
 const handleUpsert = () => {
   const { event } = component.props;
   const confirmation = event && event._id ? 'Event has been updated' : 'Event has been added';
+
   const upsert = {
     name: $('[name="name"]').val().trim(),
-    date: new Date($('[name="date"]').val().trim()),
-    completed: $('[name="completed"]').val() === 'true',
+    date: component.state.date,
+    completed: component.state.completed,
     expenses: [],
     ownerId: Meteor.userId(),
   };
