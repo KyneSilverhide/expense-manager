@@ -17,7 +17,8 @@ const backToList = () => {
 const updateMail = () => {
   const firstname = $('[name="firstname"]').val();
   const lastname = $('[name="lastname"]').val();
-  if (firstname && lastname) {
+  const email = $('[name="email"]').val();
+  if (email.trim() === '' && firstname && lastname) {
     const lowerFirstName = removeDiacritics(firstname.toLowerCase());
     const lowerLastName = removeDiacritics(lastname.toLowerCase());
     const expectedMail = `${lowerFirstName}.${lowerLastName}@${Meteor.settings.public.friend.mail_suffix}`;
@@ -39,7 +40,11 @@ export default class FriendEditor extends React.Component {
   render() {
     const { friend } = this.props;
     return (
-      <form ref={form => this.friendEditorForm = form} onSubmit={event => event.preventDefault()}>
+      <form
+        key={friend && friend._id}
+        ref={form => this.friendEditorForm = form}
+        onSubmit={event => event.preventDefault()}
+      >
         <FormControl>
           <InputLabel htmlFor="firstname">
             First name

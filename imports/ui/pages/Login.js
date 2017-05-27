@@ -5,23 +5,44 @@ import Button from 'material-ui/Button';
 import FontAwesome from 'react-fontawesome';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { browserHistory } from 'react-router';
-import { linkConnectedUserToFriendsWithSameEmail } from '../../api/friends/friend.methods.js';
+import {
+  linkConnectedUserToFriendsWithSameEmail,
+  createUserAsFriend,
+} from '../../api/friends/friend.methods.js';
+
+const linkUserToFriends = () => {
+  const user = Meteor.user();
+  const googleData = {
+    email: user.services.google.email,
+    googleAvatar: user.services.google.picture,
+    firstname: user.services.google.given_name,
+    lastname: user.services.google.family_name,
+  };
+
+  createUserAsFriend.call(googleData, (error) => {
+    if (error) {
+      Bert.alert(error.reason, 'danger');
+    }
+  });
+
+  linkConnectedUserToFriendsWithSameEmail.call(googleData, (error) => {
+    if (error) {
+      Bert.alert(error.reason, 'danger');
+    }
+  });
+};
+
+const successFullLogin = () => {
+  Bert.alert('Connected', 'success', 'growl-top-right', 'fa-check');
+  if (location.state && location.state.nextPathname) {
+    browserHistory.push(location.state.nextPathname);
+  } else {
+    browserHistory.push('/');
+  }
+  linkUserToFriends();
+};
 
 export default class Login extends React.Component {
-  linkUserToFriends() {
-    const user = Meteor.user();
-    const googleData = {
-      email: user.services.google.email,
-      googleAvatar: user.services.google.picture,
-    };
-
-    linkConnectedUserToFriendsWithSameEmail.call(googleData, (error) => {
-      if (error) {
-        Bert.alert(error.reason, 'danger');
-      }
-    });
-  }
-
   handleLogin() {
     Meteor.loginWithGoogle(
       {
@@ -31,13 +52,7 @@ export default class Login extends React.Component {
         if (error) {
           Bert.alert(error.message, 'danger', 'growl-top-right', 'fa-frown-o');
         } else {
-          Bert.alert('Connected', 'success', 'growl-top-right', 'fa-check');
-          if (location.state && location.state.nextPathname) {
-            browserHistory.push(location.state.nextPathname);
-          } else {
-            browserHistory.push('/');
-          }
-          this.linkUserToFriends();
+          successFullLogin();
         }
       },
     );

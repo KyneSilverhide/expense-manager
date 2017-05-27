@@ -32,11 +32,39 @@ export const upsertFriend = new ValidatedMethod({
   },
 });
 
+export const createUserAsFriend = new ValidatedMethod({
+  name: 'friends.createuser',
+  validate: new SimpleSchema({
+    email: { type: String, optional: false },
+    googleAvatar: { type: String, optional: false },
+    firstname: { type: String, optional: false },
+    lastname: { type: String, optional: false },
+  }).validator(),
+  run(googleData) {
+    const userAsFriend = Friends.findOne({
+      userId: this.userId,
+      ownerId: this.userId,
+    });
+    if (userAsFriend == null) {
+      const user = {
+        firstname: googleData.firstname,
+        lastname: googleData.lastname,
+        email: googleData.email,
+        ownerId: this.userId,
+      };
+      return Friends.insert(user);
+    }
+    return null;
+  },
+});
+
 export const linkConnectedUserToFriendsWithSameEmail = new ValidatedMethod({
   name: 'friends.linkusertofriends',
   validate: new SimpleSchema({
     email: { type: String, optional: false },
     googleAvatar: { type: String, optional: false },
+    firstname: { type: String, optional: false },
+    lastname: { type: String, optional: false },
   }).validator(),
   run(googleData) {
     return Friends.update(

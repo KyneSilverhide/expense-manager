@@ -29,7 +29,15 @@ export const upsertEvent = new ValidatedMethod({
     'expenses.$._id': { type: String, optional: true },
     'expenses.$.name': { type: String, optional: false },
     'expenses.$.amount': { type: Number, optional: false },
-    // 'expenses.$.friends': { type: Array, optional: false },
+    'expenses.$.friends': { type: Array, optional: false },
+    'expenses.$.friends.$': { type: Object, optional: false },
+    'expenses.$.friends.$._id': { type: String, optional: false },
+    'expenses.$.friends.$.firstname': { type: String, optional: false },
+    'expenses.$.friends.$.lastname': { type: String, optional: false },
+    'expenses.$.friends.$.email': { type: String, optional: false },
+    'expenses.$.friends.$.ownerId': { type: String, optional: false },
+    'expenses.$.friends.$.userId': { type: String, optional: true },
+    'expenses.$.friends.$.gavatar': { type: String, optional: true },
   }).validator(),
   run(event) {
     return Events.upsert({ _id: event._id }, { $set: event });

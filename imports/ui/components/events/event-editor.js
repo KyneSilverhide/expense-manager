@@ -13,13 +13,13 @@ const handleUpsert = () => {
     name: $('[name="name"]').val().trim(),
     date: component.state.date,
     completed: component.state.completed,
-    expenses: [],
+    expenses: component.state.expenses,
     ownerId: Meteor.userId(),
   };
+
   if (event && event._id) {
     upsert._id = event._id;
   }
-
   upsertEvent.call(upsert, (error) => {
     if (error) {
       Bert.alert(error.reason, 'danger');

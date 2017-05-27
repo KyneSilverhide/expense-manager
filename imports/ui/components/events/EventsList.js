@@ -17,6 +17,7 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import moment from 'moment';
+import EventExpenses from './EventExpenses.js';
 import { removeEvent } from '../../../api/events/event.methods.js';
 import { sortByDate } from '../../../modules/sorting.js';
 
@@ -45,6 +46,7 @@ export default class EventsList extends React.Component {
           Bert.alert(error.reason, 'danger');
         } else {
           Bert.alert('Event has been removed', 'success');
+          this.closeDeleteDialog();
           browserHistory.push('/events');
         }
       });
@@ -67,11 +69,12 @@ export default class EventsList extends React.Component {
                 primary={`${event.name}`}
                 secondary={moment(event.date).format('DD/MM/YYYY')}
               />
+              <EventExpenses expenses={event.expenses} readOnly={true} />
               <ListItemSecondaryAction>
                 <IconButton onClick={() => handleEdit(event._id)}>
                   <FontAwesome name="pencil" />
                 </IconButton>&nbsp;
-                <IconButton accent onClick={() => this.showDeleteDialog(event)}>
+                <IconButton className="btn-danger" onClick={() => this.showDeleteDialog(event)}>
                   <FontAwesome name="trash" />
                 </IconButton>
               </ListItemSecondaryAction>

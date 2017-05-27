@@ -9,7 +9,7 @@ import EventsList from '../../containers/events/EventsList.js';
 
 const Events = () => (
   <Layout container align="center" justify="center" className="Events">
-    <Layout item xs={5}>
+    <Layout item xs={12} sm={12} md={8} lg={5}>
       <Paper className="paper-fixed">
         <Typography type="headline" component="h3">
           Events

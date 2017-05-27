@@ -4,13 +4,14 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import FontAwesome from 'react-fontawesome';
 import Input from 'material-ui/Input';
-import InputLabel from 'material-ui/Input/InputLabel';
 import FormControl from 'material-ui/Form/FormControl';
 import { LabelSwitch } from 'material-ui/Switch';
-import 'react-infinite-calendar/styles.css';
+import Layout from 'material-ui/Layout';
+import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import eventEditor from './event-editor.js';
 import EventCalendar from './EventCalendar.js';
+import EventExpenses from './EventExpenses.js';
 
 const backToList = () => {
   browserHistory.push('/events');
@@ -19,13 +20,17 @@ const backToList = () => {
 export default class EventEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { completed: false, date: '' };
+    this.state = { completed: false, date: '', expenses: [] };
   }
 
   componentDidMount() {
     const { event } = this.props;
     eventEditor({ component: this });
-    this.setState({ completed: event ? event.completed : false, date: event ? event.date : '' });
+    this.setState({
+      completed: event ? event.completed : false,
+      date: event ? event.date : new Date(),
+      expenses: event ? event.expenses : [],
+    });
     setTimeout(
       () => {
         $('[name="name"]').focus();
@@ -36,7 +41,11 @@ export default class EventEditor extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.event) {
-      this.setState({ completed: nextProps.event.completed, date: nextProps.event.date });
+      this.setState({
+        completed: nextProps.event.completed,
+        date: nextProps.event.date,
+        expenses: nextProps.event.expenses,
+      });
     }
   }
 
@@ -48,6 +57,18 @@ export default class EventEditor extends React.Component {
     this.setState({ date });
   }
 
+  removeExpense(expense) {
+    const expenses = this.state.expenses;
+    expenses.splice(expenses.indexOf(expense), 1);
+    this.setState({ expenses });
+  }
+
+  addNewExpense(expense) {
+    const expenses = this.state.expenses;
+    expenses.push(expense);
+    this.setState({ expenses });
+  }
+
   render() {
     const { event } = this.props;
     return (
@@ -56,31 +77,56 @@ export default class EventEditor extends React.Component {
         ref={form => this.eventEditorForm = form}
         onSubmit={submitEvent => submitEvent.preventDefault()}
       >
-        <div className="form-divider" />
-        <FormControl>
-          <InputLabel htmlFor="name">
-            Name
-          </InputLabel>
-          <Input id="name" name="name" defaultValue={event && event.name} />
-        </FormControl>
-        <div className="form-divider" />
-        <FormControl>
-          <EventCalendar event={event} onSelectedDate={this.updateSelectedDate.bind(this)} />
-        </FormControl>
-        <FormControl>
-          <LabelSwitch
-            checked={this.state.completed}
-            label="Completed"
-            onChange={(changeEvent, checked) => this.toggleCompletionState(checked)}
-          />
-        </FormControl>
-        <Button raised primary onClick={() => backToList()}>
-          <FontAwesome name="undo" />&nbsp;Cancel
-        </Button>
-        &nbsp;
-        <Button raised primary type="submit">
-          <FontAwesome name="floppy-o" />&nbsp;{event && event._id ? 'Save' : 'Add'}
-        </Button>
+        <Layout container direction="column">
+          <Layout item>
+            <Paper className="paper-fixed">
+              <Layout container align="center" justify="space-around">
+                <Layout item>
+                  <FormControl className="form-header">
+                    <Input id="name" name="name" defaultValue={event && event.name} />
+                  </FormControl>
+                </Layout>
+                <Layout item>
+                  <EventCalendar
+                    event={event}
+                    onSelectedDate={this.updateSelectedDate.bind(this)}
+                  />
+                </Layout>
+                <Layout item>
+                  <FormControl>
+                    <LabelSwitch
+                      checked={this.state.completed}
+                      label="Completed"
+                      onChange={(changeEvent, checked) => this.toggleCompletionState(checked)}
+                    />
+                  </FormControl>
+                </Layout>
+              </Layout>
+            </Paper>
+          </Layout>
+          <Layout item>
+            <EventExpenses
+              expenses={this.state.expenses}
+              onAdd={this.addNewExpense.bind(this)}
+              onRemove={this.removeExpense.bind(this)}
+            />
+          </Layout>
+          <Layout item>
+            <Paper className="paper-fixed">
+              <Layout container justify="flex-end">
+                <Layout item>
+                  <Button onClick={() => backToList()}>
+                    <FontAwesome name="undo" />&nbsp;Cancel
+                  </Button>
+                  &nbsp;
+                  <Button raised primary type="submit">
+                    <FontAwesome name="floppy-o" />&nbsp;{event && event._id ? 'Save' : 'Add'}
+                  </Button>
+                </Layout>
+              </Layout>
+            </Paper>
+          </Layout>
+        </Layout>
       </form>
     );
   }

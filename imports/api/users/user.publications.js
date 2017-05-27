@@ -8,6 +8,8 @@ Meteor.publish('users.list', function publishUser() {
         fields: {
           'services.google.picture': 1,
           'services.google.email': 1,
+          'services.google.given_name': 1,
+          'services.google.family_name': 1,
           profile: 1,
         },
       },

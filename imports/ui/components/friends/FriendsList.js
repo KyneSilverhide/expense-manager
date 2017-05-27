@@ -25,6 +25,8 @@ const handleRemove = (_id) => {
   });
 };
 
+const friendIsNotUser = friend => friend.userId !== Meteor.userId();
+
 const FriendsList = ({ friends }) =>
   friends.length > 0
     ? <List>
@@ -37,12 +39,15 @@ const FriendsList = ({ friends }) =>
               secondary={friend.email}
             />
             <ListItemSecondaryAction>
-              <IconButton onClick={() => handleEdit(friend._id)}>
-                <FontAwesome name="pencil" />
-              </IconButton>&nbsp;
-              <IconButton accent onClick={() => handleRemove(friend._id)}>
-                <FontAwesome name="trash" />
-              </IconButton>
+              {friendIsNotUser(friend) &&
+                <IconButton onClick={() => handleEdit(friend._id)}>
+                  <FontAwesome name="pencil" />
+                </IconButton>}
+              &nbsp;
+              {friendIsNotUser(friend) &&
+                <IconButton className="btn-danger" onClick={() => handleRemove(friend._id)}>
+                  <FontAwesome name="trash" />
+                </IconButton>}
             </ListItemSecondaryAction>
           </ListItem>
         ))}

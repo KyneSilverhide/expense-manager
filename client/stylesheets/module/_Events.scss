@@ -1,3 +1,26 @@
 .form-divider {
   margin-bottom: 25px;
 }
+
+.form-header {
+  font-size: 1.4em;
+  padding: 4px;
+}
+
+.friend-chip .friend-avatar {
+  width: 30px;
+  height: 30px;
+  font-size: 1.2em;
+}
+
+.new-expense-fab {
+  left: 44%;
+  position: relative;
+  top: -38px;
+  text-align: center;
+}
+
+.new-expense-fab>span {
+  margin-top: 5px;
+  margin-bottom: -5px;
+}

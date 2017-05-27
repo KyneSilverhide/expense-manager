@@ -15,3 +15,13 @@ Meteor.publish('friends.view', (_id) => {
   check(_id, String);
   return Friends.find(_id);
 });
+
+Meteor.publish('friends.me', function publishUserAsFriend() {
+  if (this.userId) {
+    return Friends.find({
+      userId: this.userId,
+      ownerId: this.userId,
+    });
+  }
+  return this.ready();
+});
