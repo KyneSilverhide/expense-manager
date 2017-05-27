@@ -119,7 +119,10 @@ export default class CreateExpenseDialog extends React.Component {
       });
       onSave(newExpense);
     } else {
-      Bert.alert('Fields are incorrect or missing', 'warning');
+      Bert.alert(
+        'Please check the required fields and ensure at least one friend has been selected',
+        'info',
+      );
     }
   }
 

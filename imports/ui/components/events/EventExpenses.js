@@ -65,13 +65,8 @@ export default class EventExpenses extends React.Component {
     return (
       <Layout container direction="row">
         <Layout item>
-          <Typography type="title">
-            {expense.name}
-          </Typography>
-        </Layout>
-        <Layout item>
-          <Typography type="title">
-            {expense.amount} <FontAwesome name="eur" />
+          <Typography type="body1">
+            {expense.name} : {expense.amount} <FontAwesome name="eur" />
           </Typography>
         </Layout>
       </Layout>
@@ -80,9 +75,9 @@ export default class EventExpenses extends React.Component {
 
   renderFriends(expense) {
     return (
-      <Layout container direction="row">
+      <Layout container direction="row" className="event-friends">
         {expense.friends.map(friend => (
-          <Layout item key={friend._id}>
+          <Layout item key={friend._id} className="event-friend">
             <FriendAvatar title={`${friend.firstname} ${friend.lastname}`} friend={friend} />
           </Layout>
         ))}
@@ -110,7 +105,7 @@ export default class EventExpenses extends React.Component {
             </Paper>}
           <List>
             {expenses.map(expense => (
-              <Paper key={`${expense.name} ${expense.amount}`} className="paper-fixed">
+              <Paper key={`${expense.name} ${expense.amount}`} className="expense paper-fixed">
                 <ListItem button>
                   <ListItemText
                     primary={this.renderExpenseHeader(expense)}
