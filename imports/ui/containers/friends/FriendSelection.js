@@ -6,6 +6,7 @@ import Loading from '../../components/Loading.js';
 
 const composer = (params, onData) => {
   const subscription = Meteor.subscribe('my.friends.list');
+
   if (subscription.ready()) {
     const friends = Friends.find().fetch();
     onData(null, { friends, onAdd: params.onAdd, selectedFriends: params.selectedFriends });

@@ -11,7 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import { Card, CardHeader, CardContent, CardActions } from 'material-ui/Card';
+import { List, ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import Slide from 'material-ui/transitions/Slide';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
@@ -19,7 +19,6 @@ import Layout from 'material-ui/Layout';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 import moment from 'moment';
-import EventExpenses from './EventExpenses.js';
 import { removeEvent } from '../../../api/events/event.methods.js';
 import { sortByDate } from '../../../modules/sorting.js';
 
@@ -56,45 +55,30 @@ export default class EventsList extends React.Component {
   }
 
   render() {
-    const { events, readOnly } = this.props;
+    const { events } = this.props;
     return events.length > 0
-      ? <Layout container direction="row">
+      ? <List>
           {events.sort(sortByDate).map(event => (
-            <Layout item key={event._id} xs={4}>
-              <Card className="event-card">
-                <CardHeader
-                  className="event-card-header"
-                  avatar={
-                    <Avatar>
-                      {event && event.completed
-                        ? <FontAwesome name="check" title="This event has been completed" />
-                        : <FontAwesome name="calendar" title="This event is ongoing" />}
-                    </Avatar>
-                  }
-                  title={event.name}
-                  subheader={moment(event.date).format('DD/MM/YYYY')}
-                />
-                <CardContent className="event-card-content">
-                  <EventExpenses expenses={event.expenses} readOnly={true} />
-                </CardContent>
-                {!readOnly &&
-                  <CardActions disableActionSpacing>
-                    <Layout container justify="flex-end">
-                      <Layout item>
-                        <IconButton onClick={() => handleEdit(event._id)}>
-                          <FontAwesome name="pencil" />
-                        </IconButton>&nbsp;
-                        <IconButton
-                          className="btn-danger"
-                          onClick={() => this.showDeleteDialog(event)}
-                        >
-                          <FontAwesome name="trash" />
-                        </IconButton>
-                      </Layout>
-                    </Layout>
-                  </CardActions>}
-              </Card>
-            </Layout>
+            <ListItem key={event._id}>
+              <Avatar>
+                {event && event.completed
+                  ? <FontAwesome name="check" title="This event has been completed" />
+                  : <FontAwesome name="calendar" title="This event is ongoing" />}
+              </Avatar>
+              <ListItemText
+                inset
+                primary={event.name}
+                secondary={moment(event.date).format('DD/MM/YYYY')}
+              />
+              <ListItemSecondaryAction>
+                <IconButton onClick={() => handleEdit(event._id)}>
+                  <FontAwesome name="pencil" />
+                </IconButton>&nbsp;
+                <IconButton className="btn-danger" onClick={() => this.showDeleteDialog(event)}>
+                  <FontAwesome name="trash" />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
           ))}
           <Dialog
             open={this.state.showDeleteDialog}
@@ -120,7 +104,7 @@ export default class EventsList extends React.Component {
               </Button>
             </DialogActions>
           </Dialog>
-        </Layout>
+        </List>
       : <Layout container>
           <Layout item><Typography type="subheading">You don't have any events</Typography></Layout>
         </Layout>;

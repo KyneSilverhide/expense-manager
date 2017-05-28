@@ -11,6 +11,16 @@ Meteor.publish('my.events.list', function publishAllMyEvents() {
   return this.ready();
 });
 
+Meteor.publish('my.events.list.ongoing', function publishAllMyEvents() {
+  if (this.userId) {
+    return Events.find({
+      ownerId: this.userId,
+      completed: false,
+    });
+  }
+  return this.ready();
+});
+
 Meteor.publish('events.view', (_id) => {
   check(_id, String);
   return Events.find(_id);

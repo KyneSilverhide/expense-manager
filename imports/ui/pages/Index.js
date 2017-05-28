@@ -1,14 +1,15 @@
 import React from 'react';
 import Layout from 'material-ui/Layout';
-import Events from './events/Events';
+import EventsListDashboard from '../containers/events/EventsListDashboard';
+import Debts from '../containers/debts/Debts';
 
 const Index = () => (
   <Layout container direction="row">
     <Layout item xs={12} sm={9}>
-      <Events readOnly={true} />
+      <EventsListDashboard />
     </Layout>
     <Layout item xs={12} sm={3}>
-      DEBTS
+      <Debts />
     </Layout>
   </Layout>
 );
