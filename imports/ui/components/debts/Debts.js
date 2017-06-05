@@ -8,42 +8,69 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { sortByMail } from '../../../modules/sorting.js';
 import FriendAvatar from '../friends/FriendAvatar';
+import { isFriendMailInExpense } from './debt-utils';
 
 export default class Debts extends React.Component {
   userIsFriend(friend) {
     return friend.userId && Meteor.userId() === friend.userId;
   }
 
-  isInExpense(expense, targetFriend) {
-    let found = false;
-    for (const friend of expense.friends) {
-      if (friend.email === targetFriend.email) {
-        found = true;
+  eventWasCreatedByCurrentUser(event) {
+    return event.ownerId === Meteor.userId();
+  }
+
+  sumExpensesInEventForFriend(event, friend) {
+    const { userAsFriend } = this.props;
+    let totalOwed = 0;
+    for (const expense of event.expenses) {
+      const friendInExpense = isFriendMailInExpense(expense, friend);
+      const userInExpense = isFriendMailInExpense(expense, userAsFriend);
+      if (friendInExpense && userInExpense) {
+        const ratio = expense.friends.length;
+        totalOwed += expense.amount / ratio;
       }
     }
-    return found;
+    return totalOwed;
   }
 
   getExpenseFromFriend(friend) {
-    const { events, userAsFriend } = this.props;
+    const expenseFromFriend = this.getRawExpenseFromFriend(friend);
+    const expenseTowardFriend = this.getRawExpenseTowardFriend(friend);
+    const roundedOwned = Math.max(0, expenseFromFriend - expenseTowardFriend).toFixed(2);
+    return roundedOwned;
+  }
+
+  getRawExpenseFromFriend(friend) {
+    const { events } = this.props;
     let totalOwed = 0;
     if (!this.userIsFriend(friend)) {
       for (const event of events) {
-        for (const expense of event.expenses) {
-          const friendInExpense = this.isInExpense(expense, friend);
-          const userInExpense = this.isInExpense(expense, userAsFriend);
-          if (friendInExpense && userInExpense) {
-            const ratio = expense.friends.length;
-            totalOwed += expense.amount / ratio;
-          }
+        if (this.eventWasCreatedByCurrentUser(event)) {
+          totalOwed += this.sumExpensesInEventForFriend(event, friend);
         }
       }
     }
-    return totalOwed.toFixed(2);
+    return totalOwed;
   }
 
   getExpenseTowardFriend(friend) {
-    return friend ? 0 : 0;
+    const expenseTowardFriend = this.getRawExpenseTowardFriend(friend);
+    const expenseFromFriend = this.getRawExpenseFromFriend(friend);
+    const roundedOwned = Math.max(0, expenseTowardFriend - expenseFromFriend).toFixed(2);
+    return roundedOwned;
+  }
+
+  getRawExpenseTowardFriend(friend) {
+    const { events } = this.props;
+    let totalOwed = 0;
+    if (!this.userIsFriend(friend)) {
+      for (const event of events) {
+        if (!this.eventWasCreatedByCurrentUser(event)) {
+          totalOwed += this.sumExpensesInEventForFriend(event, friend);
+        }
+      }
+    }
+    return totalOwed;
   }
 
   hasDebts(friend) {

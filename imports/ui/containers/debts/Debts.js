@@ -1,9 +1,10 @@
 import { composeWithTracker } from 'react-komposer';
 import { Meteor } from 'meteor/meteor';
-import Friends from '../../../api/friends/friend.model.js';
-import Events from '../../../api/events/event.model.js';
-import Debts from '../../components/debts/Debts.js';
-import Loading from '../../components/Loading.js';
+import Friends from '../../../api/friends/friend.model';
+import Events from '../../../api/events/event.model';
+import Debts from '../../components/debts/Debts';
+import Loading from '../../components/Loading';
+import { isFriendMailInList } from '../../components/debts/debt-utils';
 
 const composer = (params, onData) => {
   const friendSub = Meteor.subscribe('my.friends.list');
@@ -17,6 +18,15 @@ const composer = (params, onData) => {
       userId: Meteor.userId(),
       ownerId: Meteor.userId(),
     });
+    for (const event of events) {
+      for (const expense of event.expenses) {
+        for (const friend of expense.friends) {
+          if (!isFriendMailInList(friends, friend)) {
+            friends.push(friend);
+          }
+        }
+      }
+    }
     onData(null, { friends, events, userAsFriend });
   }
 };

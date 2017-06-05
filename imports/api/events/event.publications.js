@@ -11,11 +11,23 @@ Meteor.publish('my.events.list', function publishAllMyEvents() {
   return this.ready();
 });
 
-Meteor.publish('my.events.list.ongoing', function publishAllMyEvents() {
+Meteor.publish('my.events.list.ongoing', function publishAllMyOngoingEvents() {
   if (this.userId) {
+    const user = Meteor.users.findOne(this.userId);
     return Events.find({
-      ownerId: this.userId,
-      completed: false,
+      $and: [
+        { completed: false },
+        {
+          $or: [
+            { ownerId: this.userId },
+            {
+              expenses: {
+                $elemMatch: { friends: { $elemMatch: { email: user.services.google.email } } },
+              },
+            },
+          ],
+        },
+      ],
     });
   }
   return this.ready();

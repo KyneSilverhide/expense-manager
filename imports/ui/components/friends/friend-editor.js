@@ -11,19 +11,15 @@ let component;
 const linkFriendToUser = (upsert, insertedId) => {
   if (insertedId || (upsert && upsert._id)) {
     const newFriendId = insertedId || upsert._id;
-    const matchingUser = Meteor.users.findOne({ 'services.google.email': upsert.email });
-    if (matchingUser) {
-      const data = {
-        friendId: newFriendId,
-        userId: matchingUser._id,
-        googleAvatar: matchingUser.services.google.picture,
-      };
-      linkCreatedFriendToExistingUser.call(data, (error) => {
-        if (error) {
-          Bert.alert(error.reason, 'danger');
-        }
-      });
-    }
+    const data = {
+      friendId: newFriendId,
+      mail: upsert.email,
+    };
+    linkCreatedFriendToExistingUser.call(data, (error) => {
+      if (error) {
+        Bert.alert(error.reason, 'danger');
+      }
+    });
   }
 };
 

@@ -79,14 +79,17 @@ export const linkCreatedFriendToExistingUser = new ValidatedMethod({
   name: 'friends.linkfriendtouser',
   validate: new SimpleSchema({
     friendId: { type: String, optional: false },
-    userId: { type: String, optional: false },
-    googleAvatar: { type: String, optional: false },
+    mail: { type: String, optional: false },
   }).validator(),
   run(data) {
-    return Friends.update(
-      { _id: data.friendId },
-      { $set: { userId: data.userId, gavatar: data.googleAvatar } },
-    );
+    const matchingUser = Meteor.users.findOne({ 'services.google.email': data.mail });
+    if (matchingUser) {
+      return Friends.update(
+        { _id: data.friendId },
+        { $set: { userId: matchingUser._id, gavatar: matchingUser.services.google.picture } },
+      );
+    }
+    return null;
   },
 });
 
