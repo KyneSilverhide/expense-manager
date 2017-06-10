@@ -9,7 +9,8 @@ import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 import moment from 'moment';
-import EventExpenses from './EventExpenses.js';
+import EventExpensesDashboard from './EventExpensesDashboard.js';
+import FriendAvatar from '../friends/FriendAvatar';
 import { removeEvent } from '../../../api/events/event.methods.js';
 import { sortByDate } from '../../../modules/sorting.js';
 
@@ -42,7 +43,7 @@ export default class EventsListDashboard extends React.Component {
   }
 
   render() {
-    const { events } = this.props;
+    const { events, userAsFriend } = this.props;
     return events.length > 0
       ? <Grid container direction="row" className="events-dashboard">
           {events.sort(sortByDate).map(event => (
@@ -57,11 +58,18 @@ export default class EventsListDashboard extends React.Component {
                         : <FontAwesome name="calendar" title="This event is ongoing" />}
                     </Avatar>
                   }
-                  title={event.name}
+                  title={
+                    <span>
+                      <span className="event-paid-by">
+                        Paid by <FriendAvatar friend={event.owner} />
+                      </span>
+                      <Typography className="flex">{event.name}</Typography>
+                    </span>
+                  }
                   subheader={moment(event.date).format('DD/MM/YYYY')}
                 />
                 <CardContent className="event-card-content">
-                  <EventExpenses expenses={event.expenses} readOnly={true} />
+                  <EventExpensesDashboard event={event} userAsFriend={userAsFriend} />
                 </CardContent>
               </Card>
             </Grid>
@@ -75,4 +83,5 @@ export default class EventsListDashboard extends React.Component {
 
 EventsListDashboard.propTypes = {
   events: React.PropTypes.array,
+  userAsFriend: React.PropTypes.object,
 };

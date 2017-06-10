@@ -8,13 +8,9 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { sortByMail } from '../../../modules/sorting.js';
 import FriendAvatar from '../friends/FriendAvatar';
-import { isFriendMailInExpense } from './debt-utils';
+import { isFriendMailInExpense, userIsFriend } from './debt-utils';
 
 export default class Debts extends React.Component {
-  userIsFriend(friend) {
-    return friend.userId && Meteor.userId() === friend.userId;
-  }
-
   eventWasCreatedByCurrentUser(event) {
     return event.ownerId === Meteor.userId();
   }
@@ -43,7 +39,7 @@ export default class Debts extends React.Component {
   getRawExpenseFromFriend(friend) {
     const { events } = this.props;
     let totalOwed = 0;
-    if (!this.userIsFriend(friend)) {
+    if (!userIsFriend(friend)) {
       for (const event of events) {
         if (this.eventWasCreatedByCurrentUser(event)) {
           totalOwed += this.sumExpensesInEventForFriend(event, friend);
@@ -63,7 +59,7 @@ export default class Debts extends React.Component {
   getRawExpenseTowardFriend(friend) {
     const { events } = this.props;
     let totalOwed = 0;
-    if (!this.userIsFriend(friend)) {
+    if (!userIsFriend(friend)) {
       for (const event of events) {
         if (!this.eventWasCreatedByCurrentUser(event)) {
           totalOwed += this.sumExpensesInEventForFriend(event, friend);

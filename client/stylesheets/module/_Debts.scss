@@ -1,9 +1,23 @@
-.debts .debt-from-friend {
-  color: green;
-  text-align: right;
+.debts {
+  .debt-from-friend {
+    color: green;
+    text-align: right;
+  }
+
+  .debt-toward-friend {
+    color: red;
+    text-align: right;
+  }
 }
 
-.debts .debt-toward-friend {
-  color: red;
-  text-align: right;
+
+div.event-dashboard-friends {
+
+  .debt-from-friend {
+    font-size: 1.0em;
+  }
+
+  .debt-toward-friend {
+    font-size: 1.0em;
+  }
 }

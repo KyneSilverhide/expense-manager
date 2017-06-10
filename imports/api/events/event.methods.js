@@ -1,6 +1,7 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import Events from './event.model.js';
+import Friends from '../friends/friend.model.js';
 import rateLimit from '../../modules/rate-limit.js';
 
 export const upsertEvent = new ValidatedMethod({
@@ -40,7 +41,13 @@ export const upsertEvent = new ValidatedMethod({
     'expenses.$.friends.$.gavatar': { type: String, optional: true },
   }).validator(),
   run(event) {
-    return Events.upsert({ _id: event._id }, { $set: event });
+    const eventUpdate = event;
+    const ownerAsFriend = Friends.findOne({
+      userId: this.userId,
+      ownerId: this.userId,
+    });
+    eventUpdate.owner = ownerAsFriend;
+    return Events.upsert({ _id: eventUpdate._id }, { $set: eventUpdate });
   },
 });
 

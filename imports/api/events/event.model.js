@@ -21,6 +21,14 @@ Events.schema = new SimpleSchema({
   date: { type: Date, label: 'Date of the event' },
   completed: { type: Boolean, label: 'Event has been paid' },
   ownerId: { type: String, label: 'User who created the event' },
+  owner: { type: Object, label: 'User who created the event' },
+  'owner._id': { type: String, label: 'Unique id of this owner' },
+  'owner.firstname': { type: String, label: 'First name of this owner' },
+  'owner.lastname': { type: String, label: 'Last name of this owner' },
+  'owner.email': { type: String, label: 'Email of this owner' },
+  'owner.ownerId': { type: String, label: 'User who added this owner' },
+  'owner.gavatar': { type: String, label: 'Google avatar of the owner' },
+  'owner.userId': { type: String, label: 'Link to the owner account' },
   'expenses.$.name': { type: String, label: 'Name of the expense' },
   'expenses.$.amount': { type: Number, label: 'Amount of the expense' },
   'expenses.$.friends': { type: Array, label: 'List of friends in this expense' },
@@ -37,7 +45,7 @@ Events.schema = new SimpleSchema({
   },
   'expenses.$.friends.$.gavatar': {
     type: String,
-    label: 'Google avatar when this frend is linked to an account',
+    label: 'Google avatar when this friend is linked to an account',
     optional: true,
   },
 });

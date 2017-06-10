@@ -97,7 +97,8 @@ export default class EventExpenses extends React.Component {
             <Typography type="caption">Click here to add expenses</Typography>
           </span>}
         <Grid item>
-          {expenses.length === 0 &&
+          {!readOnly &&
+            expenses.length === 0 &&
             <Paper className="paper-fixed">
               <Typography type="subheading">
                 Please add at least one expense in this event

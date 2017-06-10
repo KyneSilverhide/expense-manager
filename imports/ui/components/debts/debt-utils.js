@@ -8,4 +8,7 @@ export const isFriendMailInList = (friends, targetFriend) => {
   return found;
 };
 
-export const isFriendMailInExpense = (expense, targetFriend) => isFriendMailInList(expense.friends, targetFriend);
+export const isFriendMailInExpense = (expense, targetFriend) =>
+  isFriendMailInList(expense.friends, targetFriend);
+
+export const userIsFriend = friend => friend.userId && Meteor.userId() === friend.userId;
