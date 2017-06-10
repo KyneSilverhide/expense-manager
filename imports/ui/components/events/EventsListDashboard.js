@@ -4,8 +4,8 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { Bert } from 'meteor/themeteorchef:bert';
 import FontAwesome from 'react-fontawesome';
-import { Card, CardHeader, CardContent } from 'material-ui/Card';
-import Layout from 'material-ui/Layout';
+import Card, { CardHeader, CardContent } from 'material-ui/Card';
+import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 import moment from 'moment';
@@ -44,9 +44,9 @@ export default class EventsListDashboard extends React.Component {
   render() {
     const { events } = this.props;
     return events.length > 0
-      ? <Layout container direction="row" className="events-dashboard">
+      ? <Grid container direction="row" className="events-dashboard">
           {events.sort(sortByDate).map(event => (
-            <Layout item key={event._id} xs={4}>
+            <Grid item key={event._id} xs={4}>
               <Card className="event-card">
                 <CardHeader
                   className="event-card-header"
@@ -64,12 +64,12 @@ export default class EventsListDashboard extends React.Component {
                   <EventExpenses expenses={event.expenses} readOnly={true} />
                 </CardContent>
               </Card>
-            </Layout>
+            </Grid>
           ))}
-        </Layout>
-      : <Layout container>
-          <Layout item><Typography type="subheading">You don't have any events</Typography></Layout>
-        </Layout>;
+        </Grid>
+      : <Grid container>
+          <Grid item><Typography type="subheading">You don't have any events</Typography></Grid>
+        </Grid>;
   }
 }
 

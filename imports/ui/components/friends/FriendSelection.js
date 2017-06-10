@@ -2,9 +2,9 @@
 
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import { List, ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { sortByMail } from '../../../modules/sorting.js';
 
@@ -40,14 +40,14 @@ function renderFriends(onAdd, friends, selectedFriends) {
 }
 
 const FriendSelection = ({ onAdd, friends, selectedFriends }) => (
-  <Layout container>
-    <Layout item>
+  <Grid container>
+    <Grid item>
       <Typography type="subheading">
         Please select friends who participed in this expense
       </Typography>
       {renderFriends(onAdd, friends, selectedFriends)}
-    </Layout>
-  </Layout>
+    </Grid>
+  </Grid>
 );
 FriendSelection.propTypes = {
   onAdd: React.PropTypes.func,

@@ -1,11 +1,11 @@
 /* eslint-disable max-len, no-return-assign */
 
 import React from 'react';
-import { List, ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
-import { Dialog, DialogActions, DialogTitle } from 'material-ui/Dialog';
+import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import Dialog, { DialogActions, DialogTitle } from 'material-ui/Dialog';
 import FontAwesome from 'react-fontawesome';
 import Slide from 'material-ui/transitions/Slide';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
@@ -63,32 +63,32 @@ export default class EventExpenses extends React.Component {
 
   renderExpenseHeader(expense) {
     return (
-      <Layout container direction="row">
-        <Layout item>
+      <Grid container direction="row">
+        <Grid item>
           <Typography type="body1">
             {expense.name} : {expense.amount} <FontAwesome name="eur" />
           </Typography>
-        </Layout>
-      </Layout>
+        </Grid>
+      </Grid>
     );
   }
 
   renderFriends(expense) {
     return (
-      <Layout container direction="row" className="event-friends">
+      <Grid container direction="row" className="event-friends">
         {expense.friends.map(friend => (
-          <Layout item key={friend._id} className="event-friend">
+          <Grid item key={friend._id} className="event-friend">
             <FriendAvatar title={`${friend.firstname} ${friend.lastname}`} friend={friend} />
-          </Layout>
+          </Grid>
         ))}
-      </Layout>
+      </Grid>
     );
   }
 
   render() {
     const { expenses, readOnly } = this.props;
     return (
-      <Layout container direction="column">
+      <Grid container direction="column">
         {!readOnly &&
           <span className="new-expense-fab">
             <Button fab primary onClick={() => this.showCreateExpenseDialog()}>
@@ -96,7 +96,7 @@ export default class EventExpenses extends React.Component {
             </Button>
             <Typography type="caption">Click here to add expenses</Typography>
           </span>}
-        <Layout item>
+        <Grid item>
           {expenses.length === 0 &&
             <Paper className="paper-fixed">
               <Typography type="subheading">
@@ -124,7 +124,7 @@ export default class EventExpenses extends React.Component {
               </Paper>
             ))}
           </List>
-        </Layout>
+        </Grid>
         <Dialog
           open={this.state.showDeleteExpenseDialog}
           transition={Slide}
@@ -148,7 +148,7 @@ export default class EventExpenses extends React.Component {
           show={this.state.showCreateExpenseDialog}
           onSave={this.addNewExpense.bind(this)}
         />
-      </Layout>
+      </Grid>
     );
   }
 }

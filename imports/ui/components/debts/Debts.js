@@ -2,8 +2,8 @@
 
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import { List, ListItem, ListItemText } from 'material-ui/List';
-import Layout from 'material-ui/Layout';
+import List, { ListItem, ListItemText } from 'material-ui/List';
+import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { sortByMail } from '../../../modules/sorting.js';
@@ -80,8 +80,8 @@ export default class Debts extends React.Component {
   render() {
     const { friends } = this.props;
     return (
-      <Layout container>
-        <Layout item>
+      <Grid container>
+        <Grid item>
           <Paper>
             <List className="debts">
               {friends.filter(this.hasDebts.bind(this)).sort(sortByMail).map(friend => (
@@ -108,8 +108,8 @@ export default class Debts extends React.Component {
               ))}
             </List>
           </Paper>
-        </Layout>
-      </Layout>
+        </Grid>
+      </Grid>
     );
   }
 }

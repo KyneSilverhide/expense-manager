@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import Button from 'material-ui/Button';
 import ToolbarGroup from 'material-ui/Toolbar';
 import Avatar from 'material-ui/Avatar';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import FontAwesome from 'react-fontawesome';
 import { Meteor } from 'meteor/meteor';
@@ -32,22 +32,22 @@ const userMail = () => {
 
 const UserBlock = () => (
   <ToolbarGroup>
-    <Layout container direction="row" align="center">
-      <Layout item>
+    <Grid container direction="row" align="center">
+      <Grid item>
         <Avatar className="user-avatar" alt={userName()} src={userPicture()} />
-      </Layout>
-      <Layout item>
-        <Layout container direction="column" align="center">
+      </Grid>
+      <Grid item>
+        <Grid container direction="column" align="center">
           <Typography component="span" colorInherit={true}>{userName()}</Typography>
           <Typography component="small" type="caption" colorInherit={true}>{userMail()}</Typography>
-        </Layout>
-      </Layout>
-      <Layout item>
+        </Grid>
+      </Grid>
+      <Grid item>
         <Button contrast onClick={() => handleLogout()}>
           <FontAwesome name="sign-out" />&nbsp;Logout
         </Button>
-      </Layout>
-    </Layout>
+      </Grid>
+    </Grid>
   </ToolbarGroup>
 );
 

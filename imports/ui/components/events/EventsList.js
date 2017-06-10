@@ -4,18 +4,17 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { Bert } from 'meteor/themeteorchef:bert';
 import FontAwesome from 'react-fontawesome';
-import {
-  Dialog,
+import Dialog, {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import { List, ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import Slide from 'material-ui/transitions/Slide';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 import moment from 'moment';
@@ -105,9 +104,9 @@ export default class EventsList extends React.Component {
             </DialogActions>
           </Dialog>
         </List>
-      : <Layout container>
-          <Layout item><Typography type="subheading">You don't have any events</Typography></Layout>
-        </Layout>;
+      : <Grid container>
+          <Grid item><Typography type="subheading">You don't have any events</Typography></Grid>
+        </Grid>;
   }
 }
 

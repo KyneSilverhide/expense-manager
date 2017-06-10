@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 import InfiniteCalendar from 'react-infinite-calendar';
@@ -44,16 +44,16 @@ export default class EventCalendar extends React.Component {
     const { event } = this.props;
     return (
       <div key={event && event._id}>
-        <Layout container align="center" justify="flex-start">
-          <Layout item xs={5}>
+        <Grid container align="center" justify="flex-start">
+          <Grid item xs={5}>
             {moment(this.state.date).format('DD/MM/YYYY')}
-          </Layout>
-          <Layout item>
+          </Grid>
+          <Grid item>
             <Button onClick={() => this.showDialog()} primary>
               <FontAwesome name="calendar" />
             </Button>
-          </Layout>
-        </Layout>
+          </Grid>
+        </Grid>
         <Dialog open={this.state.showDialog} onRequestClose={() => this.closeDialog()}>
           <DialogTitle>Please pick a date</DialogTitle>
           <DialogContent>

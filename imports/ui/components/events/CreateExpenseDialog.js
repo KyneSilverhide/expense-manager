@@ -8,7 +8,7 @@ import InputLabel from 'material-ui/Input/InputLabel';
 import FormControl from 'material-ui/Form/FormControl';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import Chip from 'material-ui/Chip';
 import Slide from 'material-ui/transitions/Slide';
 import { Bert } from 'meteor/themeteorchef:bert';
@@ -149,9 +149,9 @@ export default class CreateExpenseDialog extends React.Component {
             </InputLabel>
             <Input id="expense-amount" type="number" />
           </FormControl>
-          <Layout container direction="row">
+          <Grid container direction="row">
             {this.state.selectedFriends.map(friend => (
-              <Layout key={friend._id} item>
+              <Grid key={friend._id} item>
                 <Chip
                   className="friend-chip"
                   avatar={<FriendAvatar friend={friend} />}
@@ -159,9 +159,9 @@ export default class CreateExpenseDialog extends React.Component {
                   onRequestDelete={() => this.removeSelectedFriend(friend)}
                   onClick={() => this.removeSelectedFriend(friend)}
                 />
-              </Layout>
+              </Grid>
             ))}
-          </Layout>
+          </Grid>
           <div className="form-divider" />
           {this.state.friendsError
             ? <Typography className="error" type="body">

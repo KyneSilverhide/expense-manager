@@ -6,7 +6,7 @@ import FontAwesome from 'react-fontawesome';
 import Input from 'material-ui/Input';
 import FormControl from 'material-ui/Form/FormControl';
 import { LabelSwitch } from 'material-ui/Switch';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import eventEditor from './event-editor.js';
@@ -77,22 +77,22 @@ export default class EventEditor extends React.Component {
         ref={form => this.eventEditorForm = form}
         onSubmit={submitEvent => submitEvent.preventDefault()}
       >
-        <Layout container direction="column">
-          <Layout item>
+        <Grid container direction="column">
+          <Grid item>
             <Paper className="paper-fixed">
-              <Layout container align="center" justify="space-around">
-                <Layout item>
+              <Grid container align="center" justify="space-around">
+                <Grid item>
                   <FormControl className="form-header">
                     <Input id="name" name="name" defaultValue={event && event.name} />
                   </FormControl>
-                </Layout>
-                <Layout item>
+                </Grid>
+                <Grid item>
                   <EventCalendar
                     event={event}
                     onSelectedDate={this.updateSelectedDate.bind(this)}
                   />
-                </Layout>
-                <Layout item>
+                </Grid>
+                <Grid item>
                   <FormControl>
                     <LabelSwitch
                       checked={this.state.completed}
@@ -100,21 +100,21 @@ export default class EventEditor extends React.Component {
                       onChange={(changeEvent, checked) => this.toggleCompletionState(checked)}
                     />
                   </FormControl>
-                </Layout>
-              </Layout>
+                </Grid>
+              </Grid>
             </Paper>
-          </Layout>
-          <Layout item>
+          </Grid>
+          <Grid item>
             <EventExpenses
               expenses={this.state.expenses}
               onAdd={this.addNewExpense.bind(this)}
               onRemove={this.removeExpense.bind(this)}
             />
-          </Layout>
-          <Layout item>
+          </Grid>
+          <Grid item>
             <Paper className="paper-fixed">
-              <Layout container justify="flex-end">
-                <Layout item>
+              <Grid container justify="flex-end">
+                <Grid item>
                   <Button onClick={() => backToList()}>
                     <FontAwesome name="undo" />&nbsp;Cancel
                   </Button>
@@ -122,11 +122,11 @@ export default class EventEditor extends React.Component {
                   <Button raised primary type="submit">
                     <FontAwesome name="floppy-o" />&nbsp;{event && event._id ? 'Save' : 'Add'}
                   </Button>
-                </Layout>
-              </Layout>
+                </Grid>
+              </Grid>
             </Paper>
-          </Layout>
-        </Layout>
+          </Grid>
+        </Grid>
       </form>
     );
   }

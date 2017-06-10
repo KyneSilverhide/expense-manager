@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import createPalette from 'material-ui/styles/palette';
 import createMuiTheme from 'material-ui/styles/theme';
 import { green, brown, red } from 'material-ui/styles/colors';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import AppNavigation from '../containers/AppNavigation.js';
 
 injectTapEventPlugin();
@@ -22,12 +22,12 @@ const { styleManager, theme } = MuiThemeProvider.createDefaultContext({
 
 const App = ({ children }) => (
   <MuiThemeProvider theme={theme} styleManager={styleManager}>
-    <Layout container>
+    <Grid container>
       <AppNavigation />
-      <Layout id="app-content" item xs={12}>
+      <Grid id="app-content" item xs={12}>
         {children}
-      </Layout>
-    </Layout>
+      </Grid>
+    </Grid>
   </MuiThemeProvider>
 );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'material-ui/Layout';
+import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import FontAwesome from 'react-fontawesome';
@@ -60,21 +60,21 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <Layout className="login-container" container align="center" justify="center">
-        <Layout item xs={12} sm={4}>
+      <Grid className="login-container" container align="center" justify="center">
+        <Grid item xs={12} sm={4}>
           <Paper>
-            <Layout container justify="center" direction="column" align="stretch">
+            <Grid container justify="center" direction="column" align="stretch">
               <h1 className="login-title">Login</h1>
-            </Layout>
-            <Layout container align="center" direction="column" justify="center">
+            </Grid>
+            <Grid container align="center" direction="column" justify="center">
               <FontAwesome name="user-circle-o" className="login-avatar" />
               <Button className="google-login" raised primary onClick={() => this.handleLogin()}>
                 <FontAwesome name="google-plus" />&nbsp;Login with Google
               </Button>
-            </Layout>
+            </Grid>
           </Paper>
-        </Layout>
-      </Layout>
+        </Grid>
+      </Grid>
     );
   }
 }
