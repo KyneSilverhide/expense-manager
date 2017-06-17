@@ -39,6 +39,7 @@ export const upsertEvent = new ValidatedMethod({
     'expenses.$.friends.$.ownerId': { type: String, optional: false },
     'expenses.$.friends.$.userId': { type: String, optional: true },
     'expenses.$.friends.$.gavatar': { type: String, optional: true },
+    'expenses.$.friends.$.paidExpense': { type: Boolean, optional: true },
   }).validator(),
   run(event) {
     const eventUpdate = event;

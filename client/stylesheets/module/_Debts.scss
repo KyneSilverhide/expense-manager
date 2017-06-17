@@ -17,7 +17,23 @@ div.event-dashboard-friends {
     font-size: 1.0em;
   }
 
+  .debt-from-friend.paid {
+    color: gray;
+  }
+
   .debt-toward-friend {
     font-size: 1.0em;
+  }
+
+  .debt-toward-friend.paid {
+    color: gray;
+  }
+
+  .amount {
+    margin-right: 25px;
+  }
+
+  .debts {
+    font-size: 0.9em;
   }
 }

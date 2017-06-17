@@ -8,6 +8,16 @@ export const isFriendMailInList = (friends, targetFriend) => {
   return found;
 };
 
+export const isExpensePaidByFriend = (expense, targetFriend) => {
+  let paid = false;
+  for (const friend of expense.friends) {
+    if (friend.email === targetFriend.email && friend.paidExpense) {
+      paid = true;
+    }
+  }
+  return paid;
+};
+
 export const isFriendMailInExpense = (expense, targetFriend) =>
   isFriendMailInList(expense.friends, targetFriend);
 

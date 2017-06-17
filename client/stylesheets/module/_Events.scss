@@ -62,3 +62,11 @@
   font-weight: normal;
   line-height: 16px;
 }
+
+.no-hover div:hover {
+  background-color: transparent;
+}
+
+button.hover-btn:hover {
+  background-color: rgba(0, 0, 0, 0.12);
+}

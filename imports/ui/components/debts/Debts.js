@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { sortByMail } from '../../../modules/sorting.js';
 import FriendAvatar from '../friends/FriendAvatar';
-import { isFriendMailInExpense, userIsFriend } from './debt-utils';
+import { isFriendMailInExpense, isExpensePaidByFriend, userIsFriend } from './debt-utils';
 
 export default class Debts extends React.Component {
   eventWasCreatedByCurrentUser(event) {
@@ -20,8 +20,9 @@ export default class Debts extends React.Component {
     let totalOwed = 0;
     for (const expense of event.expenses) {
       const friendInExpense = isFriendMailInExpense(expense, friend);
+      const expensePaid = isExpensePaidByFriend(expense, friend);
       const userInExpense = isFriendMailInExpense(expense, userAsFriend);
-      if (friendInExpense && userInExpense) {
+      if (!expensePaid && friendInExpense && userInExpense) {
         const ratio = expense.friends.length;
         totalOwed += expense.amount / ratio;
       }

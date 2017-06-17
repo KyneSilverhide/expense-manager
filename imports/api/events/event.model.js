@@ -48,6 +48,12 @@ Events.schema = new SimpleSchema({
     label: 'Google avatar when this friend is linked to an account',
     optional: true,
   },
+  'expenses.$.friends.$.paidExpense': {
+    type: Boolean,
+    label: 'Mark this expense as paid by this friend',
+    optional: true,
+    defaultValue: false,
+  },
 });
 
 Events.attachSchema(Events.schema);
