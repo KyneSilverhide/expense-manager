@@ -4,7 +4,7 @@ import Friends from '../../../api/friends/friend.model';
 import Events from '../../../api/events/event.model';
 import Debts from '../../components/debts/Debts';
 import Loading from '../../components/Loading';
-import { isFriendMailInList } from '../../components/debts/debt-utils';
+import { isFriendMailInList } from '../../../modules/debt-utils.js';
 
 const composer = (params, onData) => {
   const friendSub = Meteor.subscribe('my.friends.list');

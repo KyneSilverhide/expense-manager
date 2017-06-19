@@ -9,13 +9,12 @@ import { Bert } from 'meteor/themeteorchef:bert';
 import IconButton from 'material-ui/IconButton';
 import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import FriendAvatar from '../friends/FriendAvatar.js';
-import { userIsFriend, isFriendMailInExpense } from '../debts/debt-utils';
+import { userIsFriend, isFriendMailInExpense } from '../../../modules/debt-utils.js';
 import { upsertEvent } from '../../../api/events/event.methods.js';
 
 export default class EventExpensesDashboard extends React.Component {
   sendPaymentStatus(event, currentExpense, currentFriend, paymentStatus) {
     const upsert = event;
-    delete upsert.owner;
     for (const expense of event.expenses) {
       if (expense === currentExpense) {
         for (const friend of expense.friends) {

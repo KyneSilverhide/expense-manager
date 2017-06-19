@@ -6,9 +6,10 @@ import EventsListDashboard from '../../components/events/EventsListDashboard';
 import Loading from '../../components/Loading';
 
 const composer = (params, onData) => {
-  const subscription = Meteor.subscribe('my.events.list.ongoing');
+  const eventSub = Meteor.subscribe('my.events.list.ongoing');
+  const friendSub = Meteor.subscribe('my.friends.list');
 
-  if (subscription.ready()) {
+  if (eventSub.ready() && friendSub.ready()) {
     const events = Events.find().fetch();
     const userAsFriend = Friends.findOne({
       userId: Meteor.userId(),

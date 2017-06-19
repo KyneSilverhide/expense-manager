@@ -120,7 +120,7 @@ export default class EventEditor extends React.Component {
                   </Button>
                   &nbsp;
                   <Button raised primary type="submit">
-                    <FontAwesome name="floppy-o" />&nbsp;{event && event._id ? 'Save' : 'Add'}
+                    <FontAwesome name="floppy-o" />&nbsp;{event && event._id ? 'Save' : 'Create'}
                   </Button>
                 </Grid>
               </Grid>

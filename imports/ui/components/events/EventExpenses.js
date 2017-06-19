@@ -63,13 +63,9 @@ export default class EventExpenses extends React.Component {
 
   renderExpenseHeader(expense) {
     return (
-      <Grid container direction="row">
-        <Grid item>
-          <Typography type="body1">
-            {expense.name} : {expense.amount} <FontAwesome name="eur" />
-          </Typography>
-        </Grid>
-      </Grid>
+      <Typography type="subheading">
+        {expense.name} : {expense.amount} <FontAwesome name="eur" />
+      </Typography>
     );
   }
 
@@ -86,25 +82,11 @@ export default class EventExpenses extends React.Component {
   }
 
   render() {
-    const { expenses, readOnly } = this.props;
+    const { expenses } = this.props;
     return (
       <Grid container direction="column">
-        {!readOnly &&
-          <span className="new-expense-fab">
-            <Button fab primary onClick={() => this.showCreateExpenseDialog()}>
-              <FontAwesome name="eur" size="2x" />
-            </Button>
-            <Typography type="caption">Click here to add expenses</Typography>
-          </span>}
         <Grid item>
-          {!readOnly &&
-            expenses.length === 0 &&
-            <Paper className="paper-fixed">
-              <Typography type="subheading">
-                Please add at least one expense in this event
-              </Typography>
-            </Paper>}
-          <List>
+          <List dense>
             {expenses.map(expense => (
               <Paper key={`${expense.name} ${expense.amount}`} className="expense paper-fixed">
                 <ListItem button>
@@ -112,19 +94,29 @@ export default class EventExpenses extends React.Component {
                     primary={this.renderExpenseHeader(expense)}
                     secondary={this.renderFriends(expense)}
                   />
-                  {!readOnly &&
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        className="btn-danger"
-                        onClick={() => this.showDeleteExpenseDialog(expense)}
-                      >
-                        <FontAwesome name="trash" />
-                      </IconButton>
-                    </ListItemSecondaryAction>}
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      className="btn-danger"
+                      onClick={() => this.showDeleteExpenseDialog(expense)}
+                    >
+                      <FontAwesome name="trash" />
+                    </IconButton>
+                  </ListItemSecondaryAction>
                 </ListItem>
               </Paper>
             ))}
           </List>
+        </Grid>
+        <Grid item>
+          <Paper className="paper-fixed">
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Button onClick={() => this.showCreateExpenseDialog()}>
+                  <FontAwesome name="eur" />&nbsp;Add expense
+                </Button>
+              </Grid>
+            </Grid>
+          </Paper>
         </Grid>
         <Dialog
           open={this.state.showDeleteExpenseDialog}
@@ -158,5 +150,4 @@ EventExpenses.propTypes = {
   expenses: React.PropTypes.array,
   onAdd: React.PropTypes.func,
   onRemove: React.PropTypes.func,
-  readOnly: React.PropTypes.bool,
 };

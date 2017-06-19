@@ -13,18 +13,6 @@
   font-size: 1.2em;
 }
 
-.new-expense-fab {
-  left: 44%;
-  position: relative;
-  top: -38px;
-  text-align: center;
-}
-
-.new-expense-fab>span {
-  margin-top: 5px;
-  margin-bottom: -5px;
-}
-
 .events-dashboard .friend-avatar {
   width: 30px;
   height: 30px;
@@ -49,6 +37,8 @@
 .events-dashboard .event-card-content {
   margin-top: 0;
   padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .events-dashboard .event-card-header {

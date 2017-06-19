@@ -4,14 +4,15 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import { Bert } from 'meteor/themeteorchef:bert';
 import FontAwesome from 'react-fontawesome';
-import Card, { CardHeader, CardContent } from 'material-ui/Card';
+import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
 import moment from 'moment';
 import EventExpensesDashboard from './EventExpensesDashboard.js';
 import FriendAvatar from '../friends/FriendAvatar';
-import { removeEvent } from '../../../api/events/event.methods.js';
+import { removeEvent, markCompleted } from '../../../api/events/event.methods.js';
 import { sortByDate } from '../../../modules/sorting.js';
 
 export default class EventsListDashboard extends React.Component {
@@ -26,6 +27,30 @@ export default class EventsListDashboard extends React.Component {
 
   closeDeleteDialog() {
     this.setState({ showDeleteDialog: false });
+  }
+
+  userIsOwner(event) {
+    return event.ownerId === Meteor.userId();
+  }
+
+  sendMailToFriends(event) {
+    Meteor.call('events.email.friends', event, (error) => {
+      if (error) {
+        Bert.alert(error, 'danger');
+      } else {
+        Bert.alert('A mail has been sent to your friends', 'success');
+      }
+    });
+  }
+
+  markCompleted(event) {
+    markCompleted.call({ _id: event._id }, (error) => {
+      if (error) {
+        Bert.alert(error.reason, 'danger');
+      } else {
+        Bert.alert('Event is now completed', 'success');
+      }
+    });
   }
 
   handleRemove() {
@@ -71,6 +96,21 @@ export default class EventsListDashboard extends React.Component {
                 <CardContent className="event-card-content">
                   <EventExpensesDashboard event={event} userAsFriend={userAsFriend} />
                 </CardContent>
+                {this.userIsOwner(event) &&
+                  <CardActions disableActionSpacing>
+                    {/* <IconButton
+                      aria-label="Send mail"
+                      onClick={() => this.sendMailToFriends(event)}
+                    >
+                      <FontAwesome title="Send mail" name="envelope" />
+                    </IconButton> */}
+                    <IconButton
+                      aria-label="Mark completed"
+                      onClick={() => this.markCompleted(event)}
+                    >
+                      <FontAwesome title="Mark completed" name="check" />
+                    </IconButton>
+                  </CardActions>}
               </Card>
             </Grid>
           ))}

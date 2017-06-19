@@ -6,7 +6,7 @@ import FriendEditor from '../../components/friends/FriendEditor.js';
 
 const NewFriend = () => (
   <Grid container align="center" justify="center" className="NewFriend">
-    <Grid item xs={5}>
+    <Grid item xs={12} sm={8} md={5}>
       <Paper className="paper-fixed">
         <Typography type="headline" component="h3">
           Add a new friend

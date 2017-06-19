@@ -8,7 +8,11 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { sortByMail } from '../../../modules/sorting.js';
 import FriendAvatar from '../friends/FriendAvatar';
-import { isFriendMailInExpense, isExpensePaidByFriend, userIsFriend } from './debt-utils';
+import {
+  isFriendMailInExpense,
+  isExpensePaidByFriend,
+  userIsFriend,
+} from '../../../modules/debt-utils.js';
 
 export default class Debts extends React.Component {
   eventWasCreatedByCurrentUser(event) {
