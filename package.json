@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A small web application to keep track of expenses and split them among participants",
   "scripts": {
-    "start": "meteor --settings settings.json"
+    "start": "meteor --settings settings-prod.json"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",

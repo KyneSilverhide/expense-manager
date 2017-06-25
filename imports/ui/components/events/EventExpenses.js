@@ -132,7 +132,7 @@ export default class EventExpenses extends React.Component {
             <Button onClick={() => this.closeDeleteExpenseDialog()}>
               <FontAwesome name="undo" />&nbsp;Cancel
             </Button>
-            <Button onClick={() => this.removeCurrentExpense()} primary>
+            <Button onClick={() => this.removeCurrentExpense()} color="primary">
               <FontAwesome name="trash" />&nbsp;Delete
             </Button>
           </DialogActions>

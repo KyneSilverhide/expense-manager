@@ -21,10 +21,17 @@ meteor npm start
 ```
 
 # TODO
-- [ ] Send mail to friends in event
-- [ ] Search friends by name when creating expense
+- [x] Add events and create expenses
+- [x] Add friends, link friends to application accounts
+- [x] Add friends to expenses
+- [x] Display how much each one of your friends ow you/you how them
+- [x] Display amount details in each event/expenses
+- [x] Display events where you participated
+- [x] Mark events as completed from the dashboard 
+- [x] Send mail to friends in event
+- [x] Search friends by name when creating expense
 - [ ] Show/Hide completed events in administration
 - [ ] I18N + change currency
 - [ ] Add some "help" tooltips and texts
 - [ ] ? Add "description" field to expense ?
-- [ ] ? Be able to upload picture to expense?
+- [ ] ? Be able to upload picture to expense ?

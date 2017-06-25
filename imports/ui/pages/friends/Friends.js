@@ -18,7 +18,7 @@ const Friends = () => (
       </Paper>
     </Grid>
     <Link to="/friends/new">
-      <Button fab primary>
+      <Button fab color="primary">
         <AddIcon />
       </Button>
     </Link>

@@ -19,7 +19,7 @@ const Events = () => (
     </Grid>
     <Grid item xs={1}>
       <Link to="/events/new">
-        <Button fab primary>
+        <Button fab color="primary">
           <AddIcon />
         </Button>
       </Link>

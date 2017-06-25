@@ -59,7 +59,7 @@ export default class FriendsList extends React.Component {
     return friends.length > 0
       ? <List>
           {friends.sort(sortByMail).map(friend => (
-            <ListItem button key={friend._id}>
+            <ListItem key={friend._id}>
               <FriendAvatar friend={friend} />
               <ListItemText
                 inset
@@ -95,10 +95,10 @@ export default class FriendsList extends React.Component {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => this.closeDeleteDialog()} primary>
+              <Button onClick={() => this.closeDeleteDialog()} color="primary">
                 <FontAwesome name="undo" />&nbsp;Cancel
               </Button>
-              <Button onClick={() => this.handleRemove()} primary>
+              <Button onClick={() => this.handleRemove()} color="primary">
                 <FontAwesome name="trash" />&nbsp;Delete
               </Button>
             </DialogActions>

@@ -7,12 +7,12 @@ import FontAwesome from 'react-fontawesome';
 const AuthenticatedNavigation = () => (
   <ToolbarGroup>
     <Link to="/events">
-      <Button contrast>
+      <Button color="contrast">
         <FontAwesome name="calendar" />&nbsp;Events
       </Button>
     </Link>
     <Link to="/friends">
-      <Button contrast>
+      <Button color="contrast">
         <FontAwesome name="users" />&nbsp;Friends
       </Button>
     </Link>

@@ -95,10 +95,10 @@ export default class EventsList extends React.Component {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => this.closeDeleteDialog()} primary>
+              <Button onClick={() => this.closeDeleteDialog()} color="primary">
                 <FontAwesome name="undo" />&nbsp;Cancel
               </Button>
-              <Button onClick={() => this.handleRemove()} primary>
+              <Button onClick={() => this.handleRemove()} color="primary">
                 <FontAwesome name="trash" />&nbsp;Delete
               </Button>
             </DialogActions>

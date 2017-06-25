@@ -49,7 +49,7 @@ export default class EventCalendar extends React.Component {
             {moment(this.state.date).format('DD/MM/YYYY')}
           </Grid>
           <Grid item>
-            <Button onClick={() => this.showDialog()} primary>
+            <Button onClick={() => this.showDialog()} color="primary">
               <FontAwesome name="calendar" />
             </Button>
           </Grid>
@@ -78,7 +78,7 @@ export default class EventCalendar extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => this.closeDialog()} primary>Close</Button>
+            <Button onClick={() => this.closeDialog()} color="primary">Close</Button>
           </DialogActions>
         </Dialog>
       </div>

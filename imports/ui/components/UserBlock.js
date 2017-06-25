@@ -38,12 +38,12 @@ const UserBlock = () => (
       </Grid>
       <Grid item>
         <Grid container direction="column" align="center">
-          <Typography component="span" colorInherit={true}>{userName()}</Typography>
-          <Typography component="small" type="caption" colorInherit={true}>{userMail()}</Typography>
+          <Typography component="span" color="inherit">{userName()}</Typography>
+          <Typography component="small" type="caption" color="inherit">{userMail()}</Typography>
         </Grid>
       </Grid>
       <Grid item>
-        <Button contrast onClick={() => handleLogout()}>
+        <Button color="contrast" onClick={() => handleLogout()}>
           <FontAwesome name="sign-out" />&nbsp;Logout
         </Button>
       </Grid>

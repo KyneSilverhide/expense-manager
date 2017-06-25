@@ -68,7 +68,12 @@ export default class Login extends React.Component {
             </Grid>
             <Grid container align="center" direction="column" justify="center">
               <FontAwesome name="user-circle-o" className="login-avatar" />
-              <Button className="google-login" raised primary onClick={() => this.handleLogin()}>
+              <Button
+                className="google-login"
+                raised
+                color="primary"
+                onClick={() => this.handleLogin()}
+              >
                 <FontAwesome name="google-plus" />&nbsp;Login with Google
               </Button>
             </Grid>

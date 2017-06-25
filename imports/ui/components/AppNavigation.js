@@ -14,11 +14,11 @@ const AppNavigation = ({ hasUser }) =>
     : <AppBar>
         <Toolbar>
           <Link to="/">
-            <IconButton contrast>
+            <IconButton color="contrast">
               <FontAwesome name="home" />
             </IconButton>
           </Link>
-          <Typography type="title" colorInherit>Expenses Manager</Typography>
+          <Typography type="title" color="inherit">Expenses Manager</Typography>
           <AuthenticatedNavigation />
           <div className="flex-spacer" />
           <UserBlock />

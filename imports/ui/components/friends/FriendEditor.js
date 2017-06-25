@@ -6,6 +6,7 @@ import FontAwesome from 'react-fontawesome';
 import Input from 'material-ui/Input';
 import InputLabel from 'material-ui/Input/InputLabel';
 import FormControl from 'material-ui/Form/FormControl';
+import FormHelperText from 'material-ui/Form/FormHelperText';
 import { remove as removeDiacritics } from 'diacritics';
 import Button from 'material-ui/Button';
 import friendEditor from './friend-editor.js';
@@ -45,19 +46,19 @@ export default class FriendEditor extends React.Component {
         ref={form => this.friendEditorForm = form}
         onSubmit={event => event.preventDefault()}
       >
-        <FormControl>
+        <FormControl className="padded-form-control">
           <InputLabel htmlFor="firstname">
             First name
           </InputLabel>
           <Input id="firstname" name="firstname" defaultValue={friend && friend.firstname} />
         </FormControl>
-        <FormControl>
+        <FormControl className="padded-form-control">
           <InputLabel htmlFor="lastname">
             Last name
           </InputLabel>
           <Input id="lastname" name="lastname" defaultValue={friend && friend.lastname} />
         </FormControl>
-        <FormControl>
+        <FormControl className="padded-form-control">
           <InputLabel htmlFor="email">
             Email
           </InputLabel>
@@ -67,12 +68,15 @@ export default class FriendEditor extends React.Component {
             defaultValue={friend && friend.email}
             onFocus={() => updateMail()}
           />
+          <FormHelperText>
+            Gmail addresses are recommended to allow friends to login and see expenses in which they participated.
+          </FormHelperText>
         </FormControl>
-        <Button raised primary onClick={() => backToList()}>
+        <Button raised color="primary" onClick={() => backToList()}>
           <FontAwesome name="undo" />&nbsp;Cancel
         </Button>
         &nbsp;
-        <Button raised primary type="submit">
+        <Button raised color="primary" type="submit">
           <FontAwesome name="floppy-o" />&nbsp;{friend && friend._id ? 'Save' : 'Add'}
         </Button>
       </form>

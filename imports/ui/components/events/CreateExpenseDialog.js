@@ -177,7 +177,7 @@ export default class CreateExpenseDialog extends React.Component {
           <Button onClick={() => this.closeCreateExpenseDialog()}>
             <FontAwesome name="undo" />&nbsp;Cancel
           </Button>
-          <Button onClick={() => this.validateAndSaveExpense()} primary raised>
+          <Button onClick={() => this.validateAndSaveExpense()} color="primary" raised>
             <FontAwesome name="plus" />&nbsp;Add
           </Button>
         </DialogActions>
