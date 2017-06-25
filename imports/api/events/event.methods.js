@@ -5,7 +5,7 @@ import moment from 'moment';
 import Events from './event.model.js';
 import Friends from '../friends/friend.model.js';
 import rateLimit from '../../modules/rate-limit.js';
-import { isFriendMailInList } from '../../modules/debt-utils';
+import { isFriendMailInList, isFriendMailInExpense } from '../../modules/debt-utils';
 
 const eventSimpleSchema = new SimpleSchema({
   _id: {
@@ -74,7 +74,25 @@ const findFriendsInEvent = (event) => {
   return friends;
 };
 
-const buildMailContent = event => 'This is a test <b>Bold</b>';
+const buildMailContent = (event, friend) => {
+  let content = '<div>';
+  const totalOwed = 0;
+  for (const expense of event.expenses) {
+    if (isFriendMailInExpense(expense, friend)) {
+      content += `<h1><strong>${expense.name}</h1>`;
+      content += `<h2>${expense.amount}${Meteor.settings.public.application.currency}</h2>`;
+      content += `<h3>${expense.friends} participants : </h3>`;
+      content += '<ul>';
+      for (const participant of expense.friends) {
+        content += `<li>${participant.name} ${participant.lastname}</li>`;
+      }
+      content += '</ul>';
+    }
+  }
+  content += '</div>';
+  content += `You can confirm the payment of these expenses by heading toward your dashboard : ${Meteor.settings.public.application.url}<em>(A Google email is required to authenticate)</em>`;
+  return content;
+};
 
 export const mailFriendsWithExpenses = new ValidatedMethod({
   name: 'events.email.friends',
@@ -89,7 +107,7 @@ export const mailFriendsWithExpenses = new ValidatedMethod({
         const cc = event.owner.email;
         const from = 'Expense manager';
         const subject = `${event.name} (${moment(event.date).format('DD/MM/YYYY')})`;
-        const html = buildMailContent(event);
+        const html = buildMailContent(event, friend);
         console.log('MAIL', to, cc, from, subject, html);
       }
       // Email.send({ to, cc, from, subject, html });

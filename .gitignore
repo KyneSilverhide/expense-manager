@@ -1,6 +1,7 @@
 .DS_Store
 settings-production.json
 npm-debug.log
+settings-prod.json
 
 node_modules
 .meteor/local

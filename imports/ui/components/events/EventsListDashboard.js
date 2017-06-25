@@ -98,13 +98,15 @@ export default class EventsListDashboard extends React.Component {
                 </CardContent>
                 {this.userIsOwner(event) &&
                   <CardActions disableActionSpacing>
-                    {/* <IconButton
+                    <IconButton
+                      title="Send mail"
                       aria-label="Send mail"
                       onClick={() => this.sendMailToFriends(event)}
                     >
                       <FontAwesome title="Send mail" name="envelope" />
-                    </IconButton> */}
+                    </IconButton>
                     <IconButton
+                      title="Mark completed"
                       aria-label="Mark completed"
                       onClick={() => this.markCompleted(event)}
                     >

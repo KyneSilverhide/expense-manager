@@ -19,3 +19,12 @@ Finally, just run meteor with this command (this is an alias to use the `setting
 ```
 meteor npm start
 ```
+
+# TODO
+- [ ] Send mail to friends in event
+- [ ] Search friends by name when creating expense
+- [ ] Show/Hide completed events in administration
+- [ ] I18N + change currency
+- [ ] Add some "help" tooltips and texts
+- [ ] ? Add "description" field to expense ?
+- [ ] ? Be able to upload picture to expense?

@@ -21,7 +21,7 @@ const updateMail = () => {
   if (email.trim() === '' && firstname && lastname) {
     const lowerFirstName = removeDiacritics(firstname.toLowerCase());
     const lowerLastName = removeDiacritics(lastname.toLowerCase());
-    const expectedMail = `${lowerFirstName}.${lowerLastName}@${Meteor.settings.public.friend.mail_suffix}`;
+    const expectedMail = `${lowerFirstName}.${lowerLastName}@${Meteor.settings.public.friend.preferred_mail_suffix}`;
     $('[name="email"]').val(expectedMail);
   }
 };

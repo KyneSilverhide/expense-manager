@@ -1,16 +1,22 @@
 {
   "public": {
     "friend": {
-      "mail_suffix": "gmail.com"
+      "preferred_mail_suffix": "gmail.com"
+    },
+    "application": {
+      "url": "WEBSITE_URL:PORT",
+      "currency": "€",
+      "currency-icon": "eur",
+      "language": "en"
     }
   },
   "private": {
     "oAuth": {
       "google": {
-        "clientId": "637263029841-el046golrsitvdrbcjmuk2i00fia9lin.apps.googleusercontent.com",
-        "secret": "O_u_mm9YgyUE_GU8rUaH2atY"
+        "clientId": "YOUR GOOGLE CLIENT ID",
+        "secret": "YOUR SECRET KEY"
       }
     },
-    "MAIL_URL": "smtps://heisenberg.server.root@gmail.com:HeisenbergOVH@smtp.gmail.com:465"
+    "MAIL_URL": "smtps://LOGIN:PASSWORD@SMTP_URL:SMTP_PORT"
   }
 }
