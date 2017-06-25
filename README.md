@@ -13,9 +13,9 @@ Open the newly created folder and run
 npm install
  ```
  
-Open `settings.json` and change the values, if needed.
+Open `settings.json` and change the values, if needed. Then, rename it to `settings-prod.json`
  
-Finally, just run meteor with this command (this is an alias to use the `settings.json` file)
+Finally, just run meteor with this command (this is an alias to use the `settings-prod.json` file)
 ```
 meteor npm start
 ```
