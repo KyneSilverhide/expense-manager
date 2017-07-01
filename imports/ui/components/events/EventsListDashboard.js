@@ -12,7 +12,10 @@ import IconButton from 'material-ui/IconButton';
 import moment from 'moment';
 import EventExpensesDashboard from './EventExpensesDashboard.js';
 import FriendAvatar from '../friends/FriendAvatar';
-import { removeEvent, markCompleted } from '../../../api/events/event.methods.js';
+import {
+  removeEvent,
+  markCompleted,
+} from '../../../api/events/event.methods.js';
 import { sortByDate } from '../../../modules/sorting.js';
 
 export default class EventsListDashboard extends React.Component {
@@ -71,16 +74,22 @@ export default class EventsListDashboard extends React.Component {
     const { events, userAsFriend } = this.props;
     return events.length > 0
       ? <Grid container direction="row" className="events-dashboard">
-          {events.sort(sortByDate).map(event => (
-            <Grid item key={event._id} xs={4}>
+          {events.sort(sortByDate).map(event =>
+            <Grid item key={event._id} xs={12} md={6} lg={4}>
               <Card className="event-card">
                 <CardHeader
                   className="event-card-header"
                   avatar={
                     <Avatar>
                       {event && event.completed
-                        ? <FontAwesome name="check" title="This event has been completed" />
-                        : <FontAwesome name="calendar" title="This event is ongoing" />}
+                        ? <FontAwesome
+                            name="check"
+                            title="This event has been completed"
+                          />
+                        : <FontAwesome
+                            name="calendar"
+                            title="This event is ongoing"
+                          />}
                     </Avatar>
                   }
                   title={
@@ -94,7 +103,10 @@ export default class EventsListDashboard extends React.Component {
                   subheader={moment(event.date).format('DD/MM/YYYY')}
                 />
                 <CardContent className="event-card-content">
-                  <EventExpensesDashboard event={event} userAsFriend={userAsFriend} />
+                  <EventExpensesDashboard
+                    event={event}
+                    userAsFriend={userAsFriend}
+                  />
                 </CardContent>
                 {this.userIsOwner(event) &&
                   <CardActions disableActionSpacing>
@@ -115,10 +127,12 @@ export default class EventsListDashboard extends React.Component {
                   </CardActions>}
               </Card>
             </Grid>
-          ))}
+          )}
         </Grid>
       : <Grid container>
-          <Grid item><Typography type="subheading">You don't have any events</Typography></Grid>
+          <Grid item>
+            <Typography type="subheading">You don't have any events</Typography>
+          </Grid>
         </Grid>;
   }
 }

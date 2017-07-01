@@ -7,9 +7,16 @@ import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import { Bert } from 'meteor/themeteorchef:bert';
 import IconButton from 'material-ui/IconButton';
-import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import List, {
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+} from 'material-ui/List';
 import FriendAvatar from '../friends/FriendAvatar.js';
-import { userIsFriend, isFriendMailInExpense } from '../../../modules/debt-utils.js';
+import {
+  userIsFriend,
+  isFriendMailInExpense,
+} from '../../../modules/debt-utils.js';
 import { upsertEvent } from '../../../api/events/event.methods.js';
 
 export default class EventExpensesDashboard extends React.Component {
@@ -18,7 +25,7 @@ export default class EventExpensesDashboard extends React.Component {
     for (const expense of event.expenses) {
       if (expense === currentExpense) {
         for (const friend of expense.friends) {
-          if (friend === currentFriend) {
+          if (friend.email === currentFriend.email) {
             friend.paidExpense = paymentStatus;
           }
         }
@@ -28,13 +35,23 @@ export default class EventExpensesDashboard extends React.Component {
       if (error) {
         Bert.alert(error.reason, 'danger');
       } else {
-        Bert.alert(paymentStatus ? 'Expense has been paid' : 'Payment canceled', 'success');
+        Bert.alert(
+          paymentStatus ? 'Expense has been paid' : 'Payment canceled',
+          'success'
+        );
       }
     });
   }
 
   payExpense(event, currentExpense, currentFriend) {
-    this.sendPaymentStatus(event, currentExpense, currentFriend, true);
+    const { userAsFriend } = this.props;
+    if (event.owner._id === currentFriend._id) {
+      // Paying owner
+      this.sendPaymentStatus(event, currentExpense, userAsFriend, true);
+    } else {
+      // Marking friend payment as received
+      this.sendPaymentStatus(event, currentExpense, currentFriend, true);
+    }
   }
 
   cancelPayment(event, currentExpense, currentFriend) {
@@ -60,7 +77,10 @@ export default class EventExpensesDashboard extends React.Component {
     const ratio = expense.friends.length;
     const debtFromFriend = (expense.amount / ratio).toFixed(2);
     return (
-      <Typography className={`debt-from-friend ${friend.paidExpense ? 'paid' : ''}`} type="body1">
+      <Typography
+        className={`debt-from-friend ${friend.paidExpense ? 'paid' : ''}`}
+        type="body1"
+      >
         + {debtFromFriend} <FontAwesome name="eur" />
       </Typography>
     );
@@ -77,7 +97,10 @@ export default class EventExpensesDashboard extends React.Component {
     const ratio = expense.friends.length;
     const debtTowardFriend = (expense.amount / ratio).toFixed(2);
     return (
-      <Typography className={`debt-toward-friend ${friend.paidExpense ? 'paid' : ''}`} type="body1">
+      <Typography
+        className={`debt-toward-friend ${friend.paidExpense ? 'paid' : ''}`}
+        type="body1"
+      >
         - {debtTowardFriend} <FontAwesome name="eur" />
       </Typography>
     );
@@ -90,7 +113,7 @@ export default class EventExpensesDashboard extends React.Component {
     return this.renderDebtTowardFriend(event, expense, friend);
   }
 
-  renderPayDebtButton(event, expense, friend) {
+  renderReceivePaymentActions(event, expense, friend) {
     if (friend.paidExpense) {
       return (
         <IconButton
@@ -103,9 +126,7 @@ export default class EventExpensesDashboard extends React.Component {
         </IconButton>
       );
     }
-    const friendOwesMe = event.ownerId === Meteor.userId() && !userIsFriend(friend);
-    const iOweFriend = event.ownerId !== Meteor.userId() && this.friendIsOwner(event, friend);
-    if (friendOwesMe || iOweFriend) {
+    if (!this.friendIsOwner(event, friend)) {
       return (
         <IconButton
           aria-label="Pay"
@@ -117,7 +138,49 @@ export default class EventExpensesDashboard extends React.Component {
         </IconButton>
       );
     }
-    return '';
+  }
+
+  renderSendPaymentActions(event, expense, friend) {
+    if (userIsFriend(friend)) {
+      return '';
+    }
+    let ownerPaid = false;
+    for (const otherFriend of expense.friends) {
+      if (otherFriend.userId === Meteor.userId()) {
+        ownerPaid = otherFriend.paidExpense;
+      }
+    }
+    if (ownerPaid) {
+      return (
+        <IconButton
+          aria-label="Paid"
+          title="Paid. Click to cancel"
+          className="hover-btn"
+          onClick={() => this.cancelPayment(event, expense, friend)}
+        >
+          <FontAwesome name="check" className="btn-success" />
+        </IconButton>
+      );
+    }
+    return (
+      <IconButton
+        aria-label="Pay"
+        title="Not paid yet. Click to change status"
+        className="hover-btn"
+        onClick={() => this.payExpense(event, expense, friend)}
+      >
+        <FontAwesome name="credit-card" className="btn-success" />
+      </IconButton>
+    );
+  }
+
+  renderPayDebtButton(event, expense, friend) {
+    const { userAsFriend } = this.props;
+    const friendIsOwner = this.friendIsOwner(event, friend);
+    if (event.ownerId === Meteor.userId()) {
+      return this.renderReceivePaymentActions(event, expense, friend);
+    }
+    return this.renderSendPaymentActions(event, expense, friend);
   }
 
   renderFriends(expense) {
@@ -125,7 +188,7 @@ export default class EventExpensesDashboard extends React.Component {
     return (
       <Grid container direction="row" className="event-dashboard-friends">
         <List dense>
-          {expense.friends.map(friend => (
+          {expense.friends.map(friend =>
             <ListItem button key={friend._id} divider={true}>
               <FriendAvatar friend={friend} />
               <ListItemText
@@ -141,7 +204,7 @@ export default class EventExpensesDashboard extends React.Component {
                 {this.renderPayDebtButton(event, expense, friend)}
               </ListItemSecondaryAction>
             </ListItem>
-          ))}
+          )}
         </List>
       </Grid>
     );
@@ -152,7 +215,10 @@ export default class EventExpensesDashboard extends React.Component {
     const userInExpense = isFriendMailInExpense(expense, userAsFriend);
     if (userInExpense) {
       return (
-        <Paper key={`${expense.name} ${expense.amount}`} className="expense paper-fixed">
+        <Paper
+          key={`${expense.name} ${expense.amount}`}
+          className="expense paper-fixed"
+        >
           <ListItem button>
             <ListItemText
               primary={this.renderExpenseHeader(expense)}
