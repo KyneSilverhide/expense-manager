@@ -30,7 +30,7 @@ meteor npm start
 - [x] Mark events as completed from the dashboard 
 - [x] Send mail to friends in event
 - [x] Search friends by name when creating expense
-- [ ] Show/Hide completed events in administration
+- [X] Show/Hide completed events in administration
 - [ ] I18N + change currency
 - [ ] Add some "help" tooltips and texts
 - [ ] ? Add "description" field to expense ?

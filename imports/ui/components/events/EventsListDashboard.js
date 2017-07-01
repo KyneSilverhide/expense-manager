@@ -6,7 +6,9 @@ import { Bert } from 'meteor/themeteorchef:bert';
 import FontAwesome from 'react-fontawesome';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
+import { Link } from 'react-router';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import moment from 'moment';
@@ -130,8 +132,23 @@ export default class EventsListDashboard extends React.Component {
           )}
         </Grid>
       : <Grid container>
-          <Grid item>
-            <Typography type="subheading">You don't have any events</Typography>
+          <Grid item xs={12}>
+            <Paper className="paper-fixed">
+              <Typography type="subheading">
+                You don't have any events
+              </Typography>
+              <Typography type="body2">
+                You can start by{' '}
+                <Link to="/friends">
+                  adding friends
+                </Link>{' '}
+                first,
+                and then{' '}
+                <Link to="/events">
+                  create events
+                </Link>.
+              </Typography>
+            </Paper>
           </Grid>
         </Grid>;
   }

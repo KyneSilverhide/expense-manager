@@ -9,7 +9,7 @@ const composer = (params, onData) => {
 
   if (subscription.ready()) {
     const events = Events.find().fetch();
-    onData(null, { events });
+    onData(null, { events, showCompleted: params.showCompleted });
   }
 };
 

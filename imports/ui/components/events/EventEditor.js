@@ -6,6 +6,7 @@ import FontAwesome from 'react-fontawesome';
 import Input from 'material-ui/Input';
 import FormControl from 'material-ui/Form/FormControl';
 import { LabelSwitch } from 'material-ui/Switch';
+import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
@@ -31,12 +32,9 @@ export default class EventEditor extends React.Component {
       date: event ? event.date : new Date(),
       expenses: event ? event.expenses : [],
     });
-    setTimeout(
-      () => {
-        $('[name="name"]').focus();
-      },
-      0,
-    );
+    setTimeout(() => {
+      $('[name="name"]').focus();
+    }, 0);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,32 +72,47 @@ export default class EventEditor extends React.Component {
     return (
       <form
         key={event && event._id}
-        ref={form => this.eventEditorForm = form}
+        ref={form => (this.eventEditorForm = form)}
         onSubmit={submitEvent => submitEvent.preventDefault()}
       >
         <Grid container direction="column">
           <Grid item>
             <Paper className="paper-fixed">
-              <Grid container align="center" justify="space-around">
+              <Grid container direction="column">
                 <Grid item>
-                  <FormControl className="form-header">
-                    <Input id="name" name="name" defaultValue={event && event.name} />
-                  </FormControl>
-                </Grid>
-                <Grid item>
-                  <EventCalendar
-                    event={event}
-                    onSelectedDate={this.updateSelectedDate.bind(this)}
-                  />
-                </Grid>
-                <Grid item>
-                  <FormControl>
-                    <LabelSwitch
-                      checked={this.state.completed}
-                      label="Completed"
-                      onChange={(changeEvent, checked) => this.toggleCompletionState(checked)}
-                    />
-                  </FormControl>
+                  <Grid container direction="row">
+                    <Grid item xs={8}>
+                      <FormControl className="form-header">
+                        <Input
+                          id="name"
+                          name="name"
+                          placeholder="Please type the event name"
+                          defaultValue={event && event.name}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <EventCalendar
+                        event={event}
+                        onSelectedDate={this.updateSelectedDate.bind(this)}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl>
+                        <LabelSwitch
+                          checked={this.state.completed}
+                          label="Completed"
+                          onChange={(changeEvent, checked) =>
+                            this.toggleCompletionState(checked)}
+                        />
+                        <Typography type="caption">
+                          Completed events are hidden and won't be used to
+                          compute
+                          debts
+                        </Typography>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Paper>

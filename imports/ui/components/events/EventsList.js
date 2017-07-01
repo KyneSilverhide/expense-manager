@@ -10,7 +10,11 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import List, { ListItem, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
+import List, {
+  ListItem,
+  ListItemText,
+  ListItemSecondaryAction,
+} from 'material-ui/List';
 import Slide from 'material-ui/transitions/Slide';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
@@ -53,41 +57,57 @@ export default class EventsList extends React.Component {
     }
   }
 
+  completedFilter(event) {
+    const { showCompleted } = this.props;
+    return !event.completed || showCompleted;
+  }
+
   render() {
     const { events } = this.props;
     return events.length > 0
       ? <List>
-          {events.sort(sortByDate).map(event => (
-            <ListItem key={event._id}>
-              <Avatar>
-                {event && event.completed
-                  ? <FontAwesome name="check" title="This event has been completed" />
-                  : <FontAwesome name="calendar" title="This event is ongoing" />}
-              </Avatar>
-              <ListItemText
-                inset
-                primary={event.name}
-                secondary={moment(event.date).format('DD/MM/YYYY')}
-              />
-              <ListItemSecondaryAction>
-                <IconButton onClick={() => handleEdit(event._id)}>
-                  <FontAwesome name="pencil" />
-                </IconButton>&nbsp;
-                <IconButton className="btn-danger" onClick={() => this.showDeleteDialog(event)}>
-                  <FontAwesome name="trash" />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
+          {events
+            .filter(this.completedFilter.bind(this))
+            .sort(sortByDate)
+            .map(event =>
+              <ListItem key={event._id}>
+                <Avatar>
+                  {event && event.completed
+                    ? <FontAwesome
+                        name="check"
+                        title="This event has been completed"
+                      />
+                    : <FontAwesome
+                        name="calendar"
+                        title="This event is ongoing"
+                      />}
+                </Avatar>
+                <ListItemText
+                  inset
+                  primary={event.name}
+                  secondary={moment(event.date).format('DD/MM/YYYY')}
+                />
+                <ListItemSecondaryAction>
+                  <IconButton onClick={() => handleEdit(event._id)}>
+                    <FontAwesome name="pencil" />
+                  </IconButton>&nbsp;
+                  <IconButton
+                    className="btn-danger"
+                    onClick={() => this.showDeleteDialog(event)}
+                  >
+                    <FontAwesome name="trash" />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            )}
           <Dialog
             open={this.state.showDeleteDialog}
             transition={Slide}
             onRequestClose={() => this.closeDeleteDialog()}
           >
             <DialogTitle>
-              {
-                `Are you sure you want to delete event "${this.state.selectedEvent && this.state.selectedEvent.name}"`
-              }
+              {`Are you sure you want to delete event "${this.state
+                .selectedEvent && this.state.selectedEvent.name}"`}
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
@@ -105,12 +125,14 @@ export default class EventsList extends React.Component {
           </Dialog>
         </List>
       : <Grid container>
-          <Grid item><Typography type="subheading">You don't have any events</Typography></Grid>
+          <Grid item>
+            <Typography type="subheading">You don't have any events</Typography>
+          </Grid>
         </Grid>;
   }
 }
 
 EventsList.propTypes = {
   events: React.PropTypes.array,
-  readOnly: React.PropTypes.bool,
+  showCompleted: React.PropTypes.bool,
 };
